@@ -4,5 +4,7 @@ export interface loginRequest {
 }
 
 export interface loginResponse {
+  nome: string;
+  email: string;
   bearerToken: string;
 }
