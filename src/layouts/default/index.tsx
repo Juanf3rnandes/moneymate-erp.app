@@ -1,24 +1,28 @@
-import { AppContent } from "@/components/app/app-content";
+import styles from "../styles/layoutDefault.module.scss";
+import { FaRegBell } from "react-icons/fa";
 
 interface DefaultLayoutProps {
-  noPadding?: boolean;
-  children?: React.ReactNode;
+  userName: string;
+  left?: React.ReactNode;
 }
 
-export function scrollBottom() {
-  setTimeout(() => {
-    const main = $("#__main");
-    main.scroll({ top: main.scrollHeight, behavior: "smooth" });
-  }, 500);
-}
-
-export default function DefaultLayout({
-  noPadding,
-  children,
-}: DefaultLayoutProps) {
+export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
   return (
     <>
-      <AppContent left={}>{children}</AppContent>
+      <header className={styles.header_container}>
+        <nav className={styles.nav_menu}>
+          <div className={styles.items_container}>
+            <h1>MoneyMate</h1>
+          </div>
+          <div className={styles.menu_container}>
+            <div className={styles.icons_container}>
+              <FaRegBell size={20} />
+            </div>
+            <h3>{userName}</h3>
+          </div>
+        </nav>
+      </header>
+      {left && <div className={styles.left_container}>{left}</div>}
     </>
   );
 }

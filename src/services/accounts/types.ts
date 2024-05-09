@@ -8,3 +8,14 @@ export interface loginResponse {
   email: string;
   bearerToken: string;
 }
+
+export interface registerRequest {
+  nome: string;
+  emaiL: string;
+  senha: string;
+  cpf?: string;
+}
+
+export interface registerResponse {
+  resultMessage: string;
+}

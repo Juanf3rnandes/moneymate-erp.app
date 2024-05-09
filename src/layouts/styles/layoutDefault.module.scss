@@ -1,0 +1,53 @@
+@use "../../styles/abstract/mixins.module.scss";
+
+.header_container {
+  background: rgb(8, 51, 80);
+  padding: 0.2rem;
+  margin: 0;
+  left: 0px;
+  position: relative;
+  top: 0px;
+}
+
+.nav_menu {
+  @include mixins.margem-central(90%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+
+  .icons_container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .menu_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    h1,
+    h3 {
+      margin: 0;
+    }
+  }
+}
+
+.left_container {
+  background: rgb(8, 51, 80);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 80px;
+  transition: width 0.75s ease;
+  left: 0px;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .left_container {
+    display: none;
+  }
+}
