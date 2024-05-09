@@ -1,0 +1,8 @@
+[
+  {
+    "cod_funcionalidade": 1,
+    "nome": "transações",
+    "icon": "/assets/icons/funcionalidades/baixar.png",
+    "url": "http://localhost:3000/transacoes"
+  }
+]

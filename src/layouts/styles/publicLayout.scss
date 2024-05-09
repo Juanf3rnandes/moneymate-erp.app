@@ -1,0 +1,13 @@
+@use "../../styles/abstract/mixins.module";
+@use "../../styles/abstract/variables.module";
+
+.header_container {
+  background-color: $primary-color;
+  padding: 0.3rem;
+
+  .nav_menu {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+}
