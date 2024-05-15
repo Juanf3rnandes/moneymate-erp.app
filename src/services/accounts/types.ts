@@ -1,4 +1,4 @@
-export interface loginRequest {
+export interface postLoginRequest {
   email: string;
   password: string;
 }
@@ -9,7 +9,7 @@ export interface loginResponse {
   bearerToken: string;
 }
 
-export interface registerRequest {
+export interface postRegisterRequest {
   nome: string;
   emaiL: string;
   senha: string;

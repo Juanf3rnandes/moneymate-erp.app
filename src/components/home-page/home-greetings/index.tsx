@@ -1,9 +1,9 @@
-import Grid from "@/styles/lib/src/packages/atoms/grid";
+import { Stack, Typography } from "@mui/material";
 
 interface HomeGreetingsProps {
   userName: string;
   greeting: string;
-  dateResumo: Date;
+  dateResumo: string;
 }
 
 export default function HomeGreetings({
@@ -12,8 +12,9 @@ export default function HomeGreetings({
   greeting,
 }: HomeGreetingsProps) {
   return (
-    <Grid align="start">
-      <h2>{`${greeting}, ${userName}`}</h2>
-    </Grid>
+    <Stack>
+      <Typography variant="h5">{`${greeting},${userName}`}</Typography>
+      <Typography variant="body1">{`Confira o resumo de suas financaças em ${dateResumo}`}</Typography>
+    </Stack>
   );
 }

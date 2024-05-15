@@ -4,3 +4,18 @@ export interface getMenuFuncionalidadesErpResponse {
   icon: string;
   url: string;
 }
+
+export interface getTransacoesResponse {
+  data: Date;
+  tituloTransacao: string;
+  valor: number;
+}
+
+export interface getCartoesResponse {
+  id: number;
+  cod_pessoa: number;
+  numero: string;
+  bandeira: string;
+  tipo: string;
+  limite: number;
+}
