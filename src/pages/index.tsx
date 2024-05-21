@@ -29,28 +29,17 @@ export default function Home() {
   } = useHomePageController();
 
   return (
-    <>
-      <DefaultLayout userName="John Doe" />
-      <Grid container>
-        <Grid justifyContent="space-around" alignItems="center" m={3}>
-          <HomeGreetings
-            userName="John Doe"
-            greeting={homeGreeting}
-            dateResumo={formattedDate}
-          />
-          <HomeResumoContas
-            balancoSaldo={balancoSaldo}
-            receitas={receitas}
-            despesas={despesas}
-            competencia="junho"
-          />
-
-          <Grid direction="row">
-            <HomeUltimasTransacoes transacoes={transacoes} />
-            <HomeCartaoResumo cartoes={[]} />
-          </Grid>
-        </Grid>
-      </Grid>
-    </>
+    <Grid>
+      <DefaultLayout userName="Juan Fernandes" />
+      <HomeGreetings
+        userName="John Doe"
+        greeting={homeGreeting}
+        dateResumo={formattedDate}
+      />
+      <Stack direction="row">
+        <HomeUltimasTransacoes transacoes={transacoes} />
+      </Stack>
+      <HomeCartaoResumo cartoes={[]} />
+    </Grid>
   );
 }

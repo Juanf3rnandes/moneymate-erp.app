@@ -6,9 +6,11 @@ export interface getMenuFuncionalidadesErpResponse {
 }
 
 export interface getTransacoesResponse {
+  id: string;
   data: Date;
   tituloTransacao: string;
   valor: number;
+  tipo: string;
 }
 
 export interface getCartoesResponse {
@@ -18,4 +20,7 @@ export interface getCartoesResponse {
   bandeira: string;
   tipo: string;
   limite: number;
+  descricao: string;
+  diaFechamento: number;
+  diaVencimento: number;
 }

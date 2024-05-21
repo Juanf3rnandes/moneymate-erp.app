@@ -7,6 +7,7 @@ export interface loginResponse {
   nome: string;
   email: string;
   bearerToken: string;
+  fotoUrl: string;
 }
 
 export interface postRegisterRequest {

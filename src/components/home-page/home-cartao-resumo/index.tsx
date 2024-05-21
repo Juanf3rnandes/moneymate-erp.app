@@ -1,5 +1,6 @@
 import { getCartoesResponse } from "@/services/cadastro/types";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 
 interface HomeCartaoResumoProps {
   cartoes: getCartoesResponse[];
@@ -18,7 +19,14 @@ export default function HomeCartaoResumo({ cartoes }: HomeCartaoResumoProps) {
             </Typography>
           </Grid>
         )}
-        <Button color="primary">Adicionar cartão</Button>
+        <Button color="primary">
+          <Link
+            href="/financeiro/cartoes"
+            style={{ textDecoration: "none", color: "blue" }}
+          >
+            Adicionar cartão
+          </Link>
+        </Button>
       </Stack>
     </Grid>
   );

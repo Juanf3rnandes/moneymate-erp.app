@@ -1,45 +1,23 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
-import { ChartOptions } from "chart.js/auto";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { Card } from "@mui/material";
 
 export default function HomeGraphTransactions() {
-  const transactionData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "Transações",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
-  };
-
-  const chartOptions: ChartOptions<"line"> = {
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          unit: "month",
-          displayFormats: {
-            month: "MMM YYYY",
+  return (
+    <Card>
+      <PieChart
+        series={[
+          {
+            data: [
+              { id: 0, value: 10, label: "series A" },
+              { id: 1, value: 15, label: "series B" },
+              { id: 2, value: 20, label: "series C" },
+            ],
           },
-        },
-        title: {
-          display: true,
-          text: "Mês",
-        },
-      },
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Número de Transações",
-        },
-      },
-    },
-  };
-
-  return <Line data={transactionData} options={chartOptions} />;
+        ]}
+        width={400}
+        height={200}
+      />
+    </Card>
+  );
 }

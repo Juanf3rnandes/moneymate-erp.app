@@ -47,7 +47,9 @@ export default function HomeUltimasTransacoes({
                   variant="body1"
                   sx={{ flex: 1, textAlign: "right" }}
                 >
-                  {`R$:${transacao.valor}`}
+                  {`${transacao.tipo === "receita" ? `R$ ` : `- R$ `}:${
+                    transacao.valor
+                  }`}
                 </Typography>
               </Box>
             ))}

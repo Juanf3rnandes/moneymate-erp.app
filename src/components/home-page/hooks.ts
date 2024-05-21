@@ -15,51 +15,61 @@ export default function useHomePageController() {
       data: new Date(),
       tituloTransacao: "Compra no mercado",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Mensalidade da faculdade",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Mensalidade academia",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Aposta no tigrinho",
       valor: 50,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Compra no mercado",
       valor: 350,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Compra no mercado",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Mensalidade da faculdade",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Mensalidade academia",
       valor: 100,
+      tipo: "receita",
     },
     {
       data: new Date(),
       tituloTransacao: "Aposta no tigrinho",
       valor: 50,
+      tipo: "despesa",
     },
     {
       data: new Date(),
       tituloTransacao: "Compra no mercado",
       valor: 350,
+      tipo: "despesa",
     },
   ]);
   const handleHomeGreetings = () => {
