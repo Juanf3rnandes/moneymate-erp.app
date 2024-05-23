@@ -1,5 +1,5 @@
 import { getTransacoesResponse } from "@/services/cadastro/types";
-import { Card, Grid, Stack, Typography } from "@mui/material";
+import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import emptyImage from "../../../../../public/assets/imgs/transacoes-empty.svg";
-
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 interface ExtratoTransacoesListProps {
   transacoes: getTransacoesResponse[];
 }
@@ -48,6 +48,11 @@ export default function ExtratoTransacoesList({
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {`R$ ${transacao.valor.toFixed(2)}`}
+                    </TableCell>
+                    <TableCell>
+                      <Button>
+                        <MoreHorizIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))

@@ -21,10 +21,14 @@ export default function ExtratoCategoriaSaldo({
     <Grid>
       <Stack gap={3}>
         <Stack>
-          <Breadcrumbs separator=">" aria-label="breadcrumb">
-            <Typography color="text.primary">Saldo</Typography>
-          </Breadcrumbs>
-          <Card>{`R$ ${valorReceitas}`}</Card>
+          <Card>
+            <Stack>
+              <Breadcrumbs separator=">" aria-label="breadcrumb">
+                <Typography color="text.primary">Saldo</Typography>
+              </Breadcrumbs>
+              <Typography variant="body1">{`R$ ${valorReceitas}`}</Typography>
+            </Stack>
+          </Card>
         </Stack>
         <Stack>
           <Breadcrumbs separator=">" aria-label="breadcrumb">
