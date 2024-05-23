@@ -1,4 +1,4 @@
-export interface loginRequest {
+export interface postLoginRequest {
   email: string;
   password: string;
 }
@@ -7,9 +7,10 @@ export interface loginResponse {
   nome: string;
   email: string;
   bearerToken: string;
+  fotoUrl: string;
 }
 
-export interface registerRequest {
+export interface postRegisterRequest {
   nome: string;
   emaiL: string;
   senha: string;

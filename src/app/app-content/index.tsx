@@ -8,9 +8,7 @@ export default function AppContent({ items }: AppContentProps) {
   return (
     <ul style={{ listStyle: "none" }}>
       {items?.map((item) => (
-        <li key={item.cod_funcionalidade}>
-          {/* <Image src="" width={30} height={30} alt="teste" /> */}
-        </li>
+        <li key={item.cod_funcionalidade}></li>
       ))}
     </ul>
   );

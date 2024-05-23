@@ -9,6 +9,11 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
   },
+  transpileModules: [
+    "@react-three/drei",
+    "@react-three/fiber",
+    "@mui/x-charts",
+  ],
 };
 
 module.exports = nextConfig;
