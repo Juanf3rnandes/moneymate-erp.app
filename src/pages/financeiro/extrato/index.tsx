@@ -1,5 +1,6 @@
 import ExtratoCategoriaSaldo from "@/components/financeiro-page/extrato-page/extrato-categoria-saldo";
 import ExtratoFilterOptions from "@/components/financeiro-page/extrato-page/extrato-filter-options";
+import ExtratoMounthSelect from "@/components/financeiro-page/extrato-page/extrato-mounth-select";
 import ExtratoTransacoesList from "@/components/financeiro-page/extrato-page/extrato-transacoes-list";
 import DefaultLayout from "@/layouts/default";
 import {
@@ -15,17 +16,16 @@ export default function Extrato() {
   return (
     <>
       <DefaultLayout userName="John Doe" />
-      <Grid m={3}>
-        <Breadcrumbs separator=">" aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
-            Home
-          </Link>
-          <Link underline="hover" color="inherit">
-            Financeiro
-          </Link>
-          <Typography color="text.primary">Extrato</Typography>
-        </Breadcrumbs>
-
+      <Breadcrumbs separator=">" aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/">
+          Home
+        </Link>
+        <Link underline="hover" color="inherit">
+          Financeiro
+        </Link>
+        <Typography color="text.primary">Extrato</Typography>
+      </Breadcrumbs>
+      <Grid m={3} container justifyContent="center" alignItems="center">
         <Grid m={3}>
           <Typography variant="h5">Transações</Typography>
           <Stack
@@ -40,12 +40,7 @@ export default function Extrato() {
                 display="flex"
                 justifyContent="space-between"
               >
-                <Chip
-                  label={new Date().toLocaleDateString("default", {
-                    month: "long",
-                  })}
-                  variant="outlined"
-                ></Chip>
+                <ExtratoMounthSelect />
                 <ExtratoFilterOptions />
               </Stack>
             </Stack>

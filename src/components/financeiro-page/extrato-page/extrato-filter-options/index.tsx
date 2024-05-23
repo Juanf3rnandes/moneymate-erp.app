@@ -22,14 +22,6 @@ export default function ExtratoFilterOptions() {
         >
           <FilterAltIcon />
         </Button>
-        <Button
-          sx={{
-            borderRadius: "100%",
-            backgroundColor: "white",
-          }}
-        >
-          <MoreVertIcon />
-        </Button>
       </Stack>
     </Grid>
   );
