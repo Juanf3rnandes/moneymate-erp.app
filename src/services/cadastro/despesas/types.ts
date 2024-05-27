@@ -3,5 +3,5 @@ export interface postNewDespesaRequest {
   valor: number;
   data: string;
   categoria: string;
-  tipo: string;
+  paga: boolean;
 }

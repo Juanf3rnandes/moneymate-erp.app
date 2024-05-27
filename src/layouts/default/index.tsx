@@ -59,8 +59,8 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
                 src=""
                 {...stringAvatar(userName)}
                 sx={{
-                  height: 35,
-                  width: 35,
+                  height: 30,
+                  width: 30,
                   backgroundColor: stringToColor(userName),
                 }}
               />
