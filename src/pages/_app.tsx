@@ -7,47 +7,58 @@ import {
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
+  Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MoveUpIcon from "@mui/icons-material/MoveUp";
+import NewActionFloatButton from "@/components/new-action/new-action-float-button/inde";
+import useNewActionController from "@/components/new-action/hooks";
+import NewReceitaModal from "@/components/new-action/new-action-modal/new-receita-modal";
+import NewDespesaModal from "@/components/new-action/new-action-modal/new-despesa-modal";
 
 dotenv.config();
 
 export default function App({ Component, pageProps }: AppProps) {
-  const fabStyle = {
-    position: "absolute",
-    bottom: 16,
-    right: 16,
-  };
-
-  const actions = [
-    { icon: <ArrowUpwardIcon />, name: "Receita" },
-    { icon: <ArrowDownwardIcon />, name: "Despesa" },
-    { icon: <CreditCardIcon />, name: "Despesa cartão" },
-    { icon: <MoveUpIcon />, name: "Transferência" },
-  ];
+  const {
+    handleOpenModal,
+    handleDespesaModal,
+    newReceitaModalmodalOpened,
+    newDespesaModalmodalOpened,
+    modalStyle,
+    addNewReceitaForm,
+    addnewDespesaForm,
+    postNewReceita,
+  } = useNewActionController();
 
   return (
     <>
       <Component {...pageProps} />
-      <Box sx={{ "& > :not(style)": { m: 1 } }}>
-        <SpeedDial
-          ariaLabel="SpeedDial example"
-          sx={fabStyle}
-          icon={<SpeedDialIcon openIcon={<AddIcon />} />}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
-          ))}
-        </SpeedDial>
-      </Box>
+      <NewActionFloatButton
+        handleOpenNewReceita={handleOpenModal}
+        handleOpenNewDespesa={handleDespesaModal}
+      />
+
+      {newReceitaModalmodalOpened && (
+        <NewReceitaModal
+          postNewReceita={postNewReceita}
+          formAddReceita={addNewReceitaForm}
+          opened={newReceitaModalmodalOpened}
+          handleModal={handleOpenModal}
+          style={modalStyle}
+        />
+      )}
+
+      {newDespesaModalmodalOpened && (
+        <NewDespesaModal
+          opened={newDespesaModalmodalOpened}
+          addNewDespesaForm={addnewDespesaForm}
+          handleModal={handleDespesaModal}
+          style={modalStyle}
+        />
+      )}
     </>
   );
 }
