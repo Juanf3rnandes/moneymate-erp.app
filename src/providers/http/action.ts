@@ -344,7 +344,7 @@ export function useAct<T = unknown, M = T>(
 }
 
 export function useActionMock<T = unknown, M = T>(
-  props?: Partial<Action<Partial<T>, M>> & {
+    props?: Partial<Action<Partial<T>, M>> & {
     spyExec?: CallableFunction;
     spyCloseMsg?: CallableFunction;
     spyReset?: CallableFunction;

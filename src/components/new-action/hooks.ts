@@ -4,11 +4,14 @@ import React from "react";
 import { useForm } from "@/providers/shared/form";
 import { useAct } from "@/providers";
 import ReceitasService from "@/services/cadastro/receitas";
+import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
 
 export default function useNewActionController() {
   const [newReceitaModalmodalOpened, setModalOpened] = React.useState(false);
   const [newDespesaModalmodalOpened, setDespesaModalOpened] =
     React.useState(false);
+  const [newDespesaCartaoOpened,setNewDespesaCartaoOpened] = React.useState<boolean>
+  (false);
 
   const receitasService = new ReceitasService();
 
@@ -27,6 +30,15 @@ export default function useNewActionController() {
     paga: false,
   });
 
+  const addDespesaCartaoForm = useForm<postDespesaCartaoRequest>({
+    data:new Date(),
+    descricao:'',
+    numeroParcelas:0,
+    parcelado:false,
+    valor:0,
+    valorParcela:0
+  })
+
   const postNewReceita = useAct(() =>
     receitasService.postReceita(addNewReceitaForm.value)
   );
@@ -38,6 +50,10 @@ export default function useNewActionController() {
   const handleDespesaModal = () => {
     setDespesaModalOpened(!newDespesaModalmodalOpened);
   };
+
+  const handleDespesaCartaoModal = () => {
+    setNewDespesaCartaoOpened(!newDespesaCartaoOpened)
+  }
 
   const modalStyle = {
     position: "absolute" as "absolute",
@@ -56,8 +72,11 @@ export default function useNewActionController() {
     modalStyle,
     addNewReceitaForm,
     addnewDespesaForm,
+    addDespesaCartaoForm,
     newDespesaModalmodalOpened,
+    newDespesaCartaoOpened,
     handleOpenModal,
+    handleDespesaCartaoModal,
     handleDespesaModal,
     postNewReceita,
   };

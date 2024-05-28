@@ -3,4 +3,6 @@ export interface postDespesaCartaoRequest {
   descricao: string;
   data: Date;
   parcelado: boolean;
+  valorParcela: number;
+  numeroParcelas:number;
 }
