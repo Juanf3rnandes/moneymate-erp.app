@@ -5,9 +5,11 @@ export default class ReceitasService {
   constructor() {}
 
   postReceita(params: postNewReceitaRequest) {
-    return axios.post<postNewReceitaResponse>(
+    return  axios.post<postNewReceitaResponse>(
       "http://localhost:3000/receitas",
       params
     );
   }
 }
+
+
