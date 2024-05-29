@@ -67,10 +67,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {newDespesaCartaoOpened && (
         <NewDespesaCartaoModal
-         addNewDespesaCartaoForm={addDespesaCartaoForm}
-         handleModal={handleDespesaCartaoModal}
-         opened = {newDespesaCartaoOpened}
-         style={modalStyle}/>
+          addNewDespesaCartaoForm={addDespesaCartaoForm}
+          handleModal={handleDespesaCartaoModal}
+          opened={newDespesaCartaoOpened}
+          style={modalStyle}
+        />
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { postNewDespesaRequest } from "@/services/cadastro/despesas/types";
 import { postNewReceitaRequest } from "@/services/cadastro/receitas/types";
 import React from "react";
 import { useForm } from "@/providers/shared/form";
-import { useAct } from "@/providers";
+import { useAct, useService } from "@/providers";
 import ReceitasService from "@/services/cadastro/receitas";
 import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
 
@@ -10,10 +10,12 @@ export default function useNewActionController() {
   const [newReceitaModalmodalOpened, setModalOpened] = React.useState(false);
   const [newDespesaModalmodalOpened, setDespesaModalOpened] =
     React.useState(false);
-  const [newDespesaCartaoOpened,setNewDespesaCartaoOpened] = React.useState<boolean>
-  (false);
+  const [newDespesaCartaoOpened, setNewDespesaCartaoOpened] =
+    React.useState<boolean>(false);
 
-  const receitasService = new ReceitasService();
+  const newActionService = useService((h) => ({
+    receitas: new ReceitasService(h),
+  }));
 
   const addNewReceitaForm = useForm<postNewReceitaRequest>({
     descricao: "",
@@ -31,17 +33,21 @@ export default function useNewActionController() {
   });
 
   const addDespesaCartaoForm = useForm<postDespesaCartaoRequest>({
-    data:new Date(),
-    descricao:'',
-    numeroParcelas:0,
-    parcelado:false,
-    valor:0,
-    valorParcela:0
-  })
+    data: new Date(),
+    descricao: "",
+    numeroParcelas: 0,
+    parcelado: false,
+    valor: 0,
+    valorParcela: 0,
+  });
 
   const postNewReceita = useAct(() =>
-    receitasService.postReceita(addNewReceitaForm.value)
+    newActionService.receitas.postReceita(addNewReceitaForm.value)
   );
+
+  const handlePostNewReceita = () => {
+    postNewReceita();
+  };
 
   const handleOpenModal = () => {
     setModalOpened(!newReceitaModalmodalOpened);
@@ -52,8 +58,8 @@ export default function useNewActionController() {
   };
 
   const handleDespesaCartaoModal = () => {
-    setNewDespesaCartaoOpened(!newDespesaCartaoOpened)
-  }
+    setNewDespesaCartaoOpened(!newDespesaCartaoOpened);
+  };
 
   const modalStyle = {
     position: "absolute" as "absolute",
