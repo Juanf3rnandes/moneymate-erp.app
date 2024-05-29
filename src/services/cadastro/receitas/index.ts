@@ -1,15 +1,15 @@
-import axios from "axios";
+import { Axios } from "axios";
 import { postNewReceitaRequest, postNewReceitaResponse } from "./types";
 
 export default class ReceitasService {
-  constructor() {}
+  constructor(private axios: Axios) {}
 
   postReceita(params: postNewReceitaRequest) {
-    return  axios.post<postNewReceitaResponse>(
+    return this.axios.post<postNewReceitaResponse>(
       "http://localhost:3000/receitas",
-      params
+      {
+        params: params,
+      }
     );
   }
 }
-
-
