@@ -37,6 +37,19 @@ export function capitalizedCase(text: string) {
  * @param text String
  * @return String
  */
+
+export function camelCaseProps(data: any) {
+  if (!data) return {};
+
+  if (
+    typeof data !== "object" ||
+    data instanceof ArrayBuffer ||
+    data instanceof Blob
+  ) {
+    return data;
+  }
+}
+
 export function camelCase(text: string) {
   const str = titleCase(text);
   return str.charAt(0).toLowerCase() + str.substring(1);

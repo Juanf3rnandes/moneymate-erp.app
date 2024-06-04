@@ -25,6 +25,7 @@ dotenv.config();
 export default function App({ Component, pageProps }: AppProps) {
   const {
     handleOpenModal,
+    handlePostNewReceita,
     handleDespesaModal,
     handleDespesaCartaoModal,
     newReceitaModalmodalOpened,
@@ -52,6 +53,7 @@ export default function App({ Component, pageProps }: AppProps) {
           formAddReceita={addNewReceitaForm}
           opened={newReceitaModalmodalOpened}
           handleModal={handleOpenModal}
+          onSave={handlePostNewReceita}
           style={modalStyle}
         />
       )}

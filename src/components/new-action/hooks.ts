@@ -42,10 +42,16 @@ export default function useNewActionController() {
   });
 
   const postNewReceita = useAct(() =>
-    newActionService.receitas.postReceita(addNewReceitaForm.value)
+    newActionService.receitas.postReceita({
+      data: addNewReceitaForm.value.data,
+      descricao: addNewReceitaForm.value.descricao,
+      recebida: addNewReceitaForm.value.recebida,
+      valor: addNewReceitaForm.value.valor,
+    })
   );
 
   const handlePostNewReceita = () => {
+    console.log("teste");
     postNewReceita();
   };
 
@@ -62,7 +68,7 @@ export default function useNewActionController() {
   };
 
   const modalStyle = {
-    position: "absolute" as "absolute",
+    position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -82,6 +88,7 @@ export default function useNewActionController() {
     newDespesaModalmodalOpened,
     newDespesaCartaoOpened,
     handleOpenModal,
+    handlePostNewReceita,
     handleDespesaCartaoModal,
     handleDespesaModal,
     postNewReceita,
