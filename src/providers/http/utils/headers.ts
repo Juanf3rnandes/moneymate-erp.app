@@ -22,9 +22,11 @@ export function headersSerializer<T extends object = any, B = any>(
     const heads = new Headers();
 
     for (const key of Object.keys(headers)) {
-      if (headers[key]) {
-        heads.append(key, String(headers[key]));
+      if (headers) {
+        heads.append(key, String(headers));
+        
       }
+      console.log('batata frita');
     }
 
     if (!heads.has("Content-Type")) {

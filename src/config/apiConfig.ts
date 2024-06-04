@@ -1,4 +1,7 @@
-const baseURLApiCadastro = process.env.API_NEXT_CADASTRO_URL;
+const baseURLApiCadastro = process.env.API_NEXT_CADASTRO_URL 
 const baseURlApiAccounts = process.env.API_NEXT_ACCOUNTS_URL;
 
-export { baseURLApiCadastro, baseURlApiAccounts };
+export  const backendConfig ={
+    cadastro:'localhost:3000',
+    accounts:baseURlApiAccounts
+}

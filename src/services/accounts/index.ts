@@ -7,6 +7,10 @@ export class LoginService {
   constructor(private http: Http) {}
 
   async postLogin(params: postLoginRequest) {
-    return this.http.post<loginResponse>(`${this.baseUrl}/login`, params);
+    return this.http.post<loginResponse>(`WS/login`, {
+      baseURL:'',
+      params
+    });
+    
   }
 }

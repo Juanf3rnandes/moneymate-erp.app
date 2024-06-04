@@ -1,14 +1,16 @@
 import { Http } from "@/providers/http/utils";
 import { postNewReceitaRequest, postNewReceitaResponse } from "./types";
+import { backendConfig } from "@/config";
+
 
 export default class ReceitasService {
   constructor(private http: Http) {}
 
   postReceita(params: postNewReceitaRequest) {
     return this.http.post<postNewReceitaResponse>(
-      `http://localhost:3000/receitas`,
+      `/receitas`,
       {
-        baseURL: "http://localhost:3000",
+        baseURL: backendConfig.cadastro,
         params: params,
       }
     );
