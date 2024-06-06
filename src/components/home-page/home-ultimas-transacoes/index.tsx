@@ -1,11 +1,11 @@
-import { getTransacoesResponse } from "@/services/cadastro/types";
+import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { compareAsc, format } from "date-fns";
 
 interface HomeUltimasTransacoesProps {
-  transacoes: getTransacoesResponse[];
+  transacoes: getTransacaoResponse[];
 }
 
 export default function HomeUltimasTransacoes({
@@ -41,13 +41,13 @@ export default function HomeUltimasTransacoes({
                   {transacao.data.toLocaleString().split(" ")[0]}
                 </Typography>
                 <Typography variant="body1" sx={{ flex: 2 }}>
-                  {transacao.tituloTransacao}
+                  {transacao.descricao}
                 </Typography>
                 <Typography
                   variant="body1"
                   sx={{ flex: 1, textAlign: "right" }}
                 >
-                  {`${transacao.tipo === "receita" ? `R$ ` : `- R$ `}:${
+                  {`${transacao.tipoTransacao == 1 ? `R$ ` : `- R$ `}:${
                     transacao.valor
                   }`}
                 </Typography>

@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export interface getMenuFuncionalidadesErpResponse {
   cod_funcionalidade: number;
   nome: string;
@@ -6,7 +8,7 @@ export interface getMenuFuncionalidadesErpResponse {
 }
 
 export interface getTransacoesResponse {
-  id: string;
+  id?: UUID;
   data: Date;
   tituloTransacao: string;
   valor: number;
