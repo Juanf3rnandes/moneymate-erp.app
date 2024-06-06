@@ -11,7 +11,7 @@ export default function useHomePageController() {
   const [balancoSaldo, setBalancoSaldo] = React.useState<number>(-1000);
   const [receitas, setReceitas] = React.useState<number>(100);
   const [despesas, setDespesas] = React.useState<number>(1100);
-  const [despesaVencida,setDespesaVencida]  = React.useState<boolean>(true);
+  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(false);
 
   const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>([
     {
@@ -19,36 +19,38 @@ export default function useHomePageController() {
       descricao: "Compra no mercado",
       valor: 100,
       tipoTransacao: 2,
-      cod_cartao:null,
-      id:'8692b055-a456-4b25-b3ba-c33ba231c26c',
-      idConta:'8692b055-a456-4b25-b3ba-c33ba231c26a'
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
     },
     {
       data: new Date(),
       descricao: "Compra no mercado",
       valor: 100,
       tipoTransacao: 2,
-      cod_cartao:null,
-      id:'8692b055-a456-4b25-b3ba-c33ba231c26c',
-      idConta:'8692b055-a456-4b25-b3ba-c33ba231c26a'
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
     },
     {
       data: new Date(),
       descricao: "Compra no mercado",
       valor: 100,
       tipoTransacao: 2,
-      cod_cartao:null,
-      id:'8692b055-a456-4b25-b3ba-c33ba231c26c',
-      idConta:'8692b055-a456-4b25-b3ba-c33ba231c26a'
-    },   
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
+    },
   ]);
 
   const vencimentoDespesa = React.useCallback(() => {
-  const despesas =  transacoes.filter((x) => x.tipoTransacao == 2 || x.data == new Date())
-    if(despesas) {
+    const despesas = transacoes.filter(
+      (x) => x.tipoTransacao == 2 || x.data == new Date()
+    );
+    if (despesas) {
       setDespesaVencida(true);
     }
-  },[transacoes])
+  }, [transacoes]);
 
   const handleHomeGreetings = () => {
     const currentDate = new Date(date);

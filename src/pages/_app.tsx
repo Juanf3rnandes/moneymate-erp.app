@@ -19,6 +19,7 @@ import useNewActionController from "@/components/new-action/hooks";
 import NewReceitaModal from "@/components/new-action/new-action-modal/new-receita-modal";
 import NewDespesaModal from "@/components/new-action/new-action-modal/new-despesa-modal";
 import NewDespesaCartaoModal from "@/components/new-action/new-action-modal/new-despesa-cartao-modal";
+import NewTransacaoModal from "@/components/new-action/new-action-modal/new-transacao-modal";
 
 dotenv.config();
 
@@ -28,13 +29,16 @@ export default function App({ Component, pageProps }: AppProps) {
     handlePostNewReceita,
     handleDespesaModal,
     handleDespesaCartaoModal,
+    handleTransacaoModal,
     newReceitaModalmodalOpened,
     newDespesaModalmodalOpened,
     newDespesaCartaoOpened,
+    newTransacaoOpened,
     modalStyle,
     addNewReceitaForm,
     addnewDespesaForm,
     addDespesaCartaoForm,
+    addTransacaoForm,
     postNewReceita,
   } = useNewActionController();
 
@@ -45,6 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
         handleOpenNewReceita={handleOpenModal}
         handleOpenNewDespesa={handleDespesaModal}
         handleOpenNewDespesaCartao={handleDespesaCartaoModal}
+        handleOpenNewTransacao={handleTransacaoModal}
       />
 
       {newReceitaModalmodalOpened && (
@@ -72,6 +77,14 @@ export default function App({ Component, pageProps }: AppProps) {
           addNewDespesaCartaoForm={addDespesaCartaoForm}
           handleModal={handleDespesaCartaoModal}
           opened={newDespesaCartaoOpened}
+          style={modalStyle}
+        />
+      )}
+      {NewTransacaoModal && (
+        <NewTransacaoModal
+          opened={newTransacaoOpened}
+          form={addTransacaoForm}
+          handleModal={handleTransacaoModal}
           style={modalStyle}
         />
       )}

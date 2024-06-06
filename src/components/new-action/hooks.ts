@@ -5,6 +5,7 @@ import { useForm } from "@/providers/shared/form";
 import { useAct, useService } from "@/providers";
 import ReceitasService from "@/services/cadastro/receitas";
 import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
+import { postTransacaoRequest } from "@/services/cadastro/transacao/types";
 
 export default function useNewActionController() {
   const [newReceitaModalmodalOpened, setModalOpened] = React.useState(false);
@@ -44,6 +45,15 @@ export default function useNewActionController() {
     valorParcela: 0,
   });
 
+  const addTransacaoForm = useForm<postTransacaoRequest>({
+    cod_pessoa: 0,
+    conta: "",
+    descricao: "",
+    tipo: 1,
+    valor: 0,
+    data: new Date(),
+  });
+
   const postNewReceita = useAct(() =>
     newActionService.receitas.postReceita({
       data: addNewReceitaForm.value.data,
@@ -70,6 +80,10 @@ export default function useNewActionController() {
     setNewDespesaCartaoOpened(!newDespesaCartaoOpened);
   };
 
+  const handleTransacaoModal = () => {
+    setNewTransacaoOpened(!newTransacaoOpened);
+  };
+
   const modalStyle = {
     position: "absolute",
     top: "50%",
@@ -88,12 +102,15 @@ export default function useNewActionController() {
     addNewReceitaForm,
     addnewDespesaForm,
     addDespesaCartaoForm,
+    addTransacaoForm,
     newDespesaModalmodalOpened,
     newDespesaCartaoOpened,
+    newTransacaoOpened,
     handleOpenModal,
     handlePostNewReceita,
     handleDespesaCartaoModal,
     handleDespesaModal,
+    handleTransacaoModal,
     postNewReceita,
   };
 }
