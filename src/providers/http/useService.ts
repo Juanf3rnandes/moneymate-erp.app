@@ -1,13 +1,16 @@
-import { Axios } from "axios";
 import React from "react";
-import { HttpConfig } from "./types";
-import { factoryHttp, factoryHttpMock } from "./utils";
+import { Http } from "./utils";
 
-const AxiosContext = React.createContext<Axios>(null as never);
-export const useHttp = () => React.useContext(AxiosContext);
+const HttpContext = React.createContext<Http>(null as never);
+export const useHttp = () => React.useContext(HttpContext);
 
-export function useService<T>(factory: (axios: Axios) => T) {
-  const axiosHttp = useHttp();
-  const service = React.useMemo(() => factory(axiosHttp), [factory, axiosHttp]);
+// interface HttpProviderProps {
+//   configs?: HttpConfig;
+//   children?: React.ReactNode;
+// }
+
+export function useService<T>(factory: (http: Http) => T) {
+  const http = useHttp();
+  const service = React.useMemo(() => factory(http), [factory, http]);
   return service;
 }

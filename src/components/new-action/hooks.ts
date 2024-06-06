@@ -13,8 +13,8 @@ export default function useNewActionController() {
   const [newDespesaCartaoOpened, setNewDespesaCartaoOpened] =
     React.useState<boolean>(false);
 
-  const [newTransacaoOpened,setNewTransacaoOpened] = React.useState<boolean>(false);
-  
+  const [newTransacaoOpened, setNewTransacaoOpened] =
+    React.useState<boolean>(false);
 
   const newActionService = useService((h) => ({
     receitas: new ReceitasService(h),
