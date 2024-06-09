@@ -1,28 +1,41 @@
-import { Button, Grid, Stack } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
+
 export default function ExtratoFilterOptions() {
   return (
     <Grid>
-      <Stack direction="row">
-        <Button
-          sx={{
-            borderRadius: "100%",
-            backgroundColor: "white",
-          }}
-        >
-          <SearchIcon />
-        </Button>
-        <Button
-          sx={{
-            borderRadius: "100%",
-            backgroundColor: "white",
-          }}
-        >
-          <FilterAltIcon />
-        </Button>
-      </Stack>
+      <FormControl>
+        <Stack direction="row" spacing={2} alignItems="center" width={500}>
+          <TextField
+            variant="outlined"
+            placeholder="Pesquisar"
+            label="Palavra-chave"
+          />
+          <FormControl>
+            <Stack width={100}>
+              <InputLabel id="demo-simple-select-standard-label">
+                Tipo
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Tipo"
+                variant="outlined"
+              >
+                <MenuItem value={10}>Receita</MenuItem>
+                <MenuItem value={20}>Despesa</MenuItem>
+              </Select>
+            </Stack>
+          </FormControl>
+        </Stack>
+      </FormControl>
     </Grid>
   );
 }

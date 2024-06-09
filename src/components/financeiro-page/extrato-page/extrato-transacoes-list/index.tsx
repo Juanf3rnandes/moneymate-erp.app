@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import emptyImage from "../../../../../public/assets/imgs/transacoes-empty.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 interface ExtratoTransacoesListProps {
   transacoes: getTransacoesResponse[];
 }
@@ -20,14 +21,23 @@ export default function ExtratoTransacoesList({
   return (
     <Card>
       <Grid container>
-        <TableContainer>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableContainer
+          component={Paper}
+          sx={{ width: "100%", overflowX: "auto" }}
+        >
+          <Table
+            sx={{ minWidth: 650, border: "1px solid #e0e0e0" }}
+            size="small"
+            aria-label="a dense table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell align="center">Data</TableCell>
                 <TableCell align="center">Descrição</TableCell>
+                <TableCell align="center">Tipo</TableCell>
                 <TableCell align="center">Categoria</TableCell>
                 <TableCell align="center">Valor</TableCell>
+                <TableCell align="center">Ações</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -37,19 +47,18 @@ export default function ExtratoTransacoesList({
                     key={transacao.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center">
                       {transacao.data.toLocaleDateString()}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center">
                       {transacao.tituloTransacao}
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                      {transacao.tipo}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center">{transacao.tipo}</TableCell>
+                    <TableCell align="center">{transacao.tipo}</TableCell>
+                    <TableCell align="center">
                       {`R$ ${transacao.valor.toFixed(2)}`}
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="center">
                       <Button>
                         <MoreHorizIcon />
                       </Button>
@@ -57,12 +66,21 @@ export default function ExtratoTransacoesList({
                   </TableRow>
                 ))
               ) : (
-                <Grid container justifyContent="center">
-                  <Stack justifyContent="center" alignItems="center">
-                    <Image src={emptyImage} alt="" width={200} height={200} />
-                    <Typography>Nenhum resultado</Typography>
-                  </Stack>
-                </Grid>
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <Grid container justifyContent="center">
+                      <Stack justifyContent="center" alignItems="center">
+                        <Image
+                          src={emptyImage}
+                          alt=""
+                          width={200}
+                          height={200}
+                        />
+                        <Typography>Nenhum resultado</Typography>
+                      </Stack>
+                    </Grid>
+                  </TableCell>
+                </TableRow>
               )}
             </TableBody>
           </Table>

@@ -13,7 +13,6 @@ export default function Cartoes() {
 
   return (
     <>
-      <DefaultLayout userName="John Doe" />
       <Grid container m={2}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">

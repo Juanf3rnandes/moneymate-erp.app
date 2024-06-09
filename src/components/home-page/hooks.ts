@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { format } from "date-fns";
-import { getTransacoesResponse } from "@/services/cadastro/types";
+import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
+import { randomUUID } from "crypto";
 
 export default function useHomePageController() {
   const [userName, setUserName] = React.useState<string>("");
@@ -10,68 +11,47 @@ export default function useHomePageController() {
   const [balancoSaldo, setBalancoSaldo] = React.useState<number>(-1000);
   const [receitas, setReceitas] = React.useState<number>(100);
   const [despesas, setDespesas] = React.useState<number>(1100);
-  const [transacoes, setTransacoes] = React.useState<getTransacoesResponse[]>([
+  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(false);
+
+  const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>([
     {
       data: new Date(),
-      tituloTransacao: "Compra no mercado",
+      descricao: "Compra no mercado",
       valor: 100,
-      tipo: "receita",
+      tipoTransacao: 2,
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
     },
     {
       data: new Date(),
-      tituloTransacao: "Mensalidade da faculdade",
+      descricao: "Compra no mercado",
       valor: 100,
-      tipo: "receita",
+      tipoTransacao: 2,
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
     },
     {
       data: new Date(),
-      tituloTransacao: "Mensalidade academia",
+      descricao: "Compra no mercado",
       valor: 100,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Aposta no tigrinho",
-      valor: 50,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Compra no mercado",
-      valor: 350,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Compra no mercado",
-      valor: 100,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Mensalidade da faculdade",
-      valor: 100,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Mensalidade academia",
-      valor: 100,
-      tipo: "receita",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Aposta no tigrinho",
-      valor: 50,
-      tipo: "despesa",
-    },
-    {
-      data: new Date(),
-      tituloTransacao: "Compra no mercado",
-      valor: 350,
-      tipo: "despesa",
+      tipoTransacao: 2,
+      cod_cartao: null,
+      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
+      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
     },
   ]);
+
+  const vencimentoDespesa = React.useCallback(() => {
+    const despesas = transacoes.filter(
+      (x) => x.tipoTransacao == 2 || x.data == new Date()
+    );
+    if (despesas) {
+      setDespesaVencida(true);
+    }
+  }, [transacoes]);
+
   const handleHomeGreetings = () => {
     const currentDate = new Date(date);
     const formatted = format(currentDate, "dd/MM/yyyy");
@@ -99,6 +79,7 @@ export default function useHomePageController() {
     despesas,
     transacoes,
     formattedDate,
+    despesaVencida,
     handleHomeGreetings,
     useEffect,
   };

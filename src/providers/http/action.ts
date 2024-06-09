@@ -337,14 +337,14 @@ export function useAct<T = unknown, M = T>(
 
   const fetch = React.useCallback(
     () => action.exec(request, configs),
-    [action]
+    [action, configs, request]
   );
 
-  return React.useMemo(() => Object.assign(fetch, action), [action]);
+  return React.useMemo(() => Object.assign(fetch, action), [action, fetch]);
 }
 
 export function useActionMock<T = unknown, M = T>(
-    props?: Partial<Action<Partial<T>, M>> & {
+  props?: Partial<Action<Partial<T>, M>> & {
     spyExec?: CallableFunction;
     spyCloseMsg?: CallableFunction;
     spyReset?: CallableFunction;

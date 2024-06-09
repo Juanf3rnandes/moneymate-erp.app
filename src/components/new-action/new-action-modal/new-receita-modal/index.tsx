@@ -11,17 +11,20 @@ import {
   Typography,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-import { postNewReceitaRequest } from "@/services/cadastro/receitas/types";
-import { Form, useForm } from "@/providers/shared/form";
+import {
+  postNewReceitaRequest,
+  postNewReceitaResponse,
+} from "@/services/cadastro/receitas/types";
+import { Form } from "@/providers/shared/form";
 import { Action } from "@/providers";
 
 interface NewReceitaModalProps {
   formAddReceita: Form<postNewReceitaRequest>;
-  postNewReceita: Action<postNewReceitaRequest>;
+  postNewReceita: Action<postNewReceitaResponse>;
   opened: boolean;
   style: object;
   handleModal: () => void;
-  onSave?: () => void;
+  onSave: () => void;
 }
 
 export default function NewReceitaModal({
