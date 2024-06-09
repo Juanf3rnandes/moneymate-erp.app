@@ -1,3 +1,4 @@
+import ExtratoActionsButton from "@/components/financeiro-page/extrato-page/extrato-actions-button";
 import ExtratoCategoriaSaldo from "@/components/financeiro-page/extrato-page/extrato-categoria-saldo";
 import ExtratoFilterOptions from "@/components/financeiro-page/extrato-page/extrato-filter-options";
 import ExtratoMounthSelect from "@/components/financeiro-page/extrato-page/extrato-mounth-select";
@@ -15,7 +16,6 @@ import {
 export default function Extrato() {
   return (
     <>
-      <DefaultLayout userName="John Doe" />
       <Breadcrumbs separator=">" aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
           Home
@@ -26,8 +26,8 @@ export default function Extrato() {
         <Typography color="text.primary">Extrato</Typography>
       </Breadcrumbs>
       <Grid m={3} container justifyContent="center" alignItems="center">
+        <ExtratoActionsButton />
         <Grid m={3}>
-          <Typography variant="h5">Transações</Typography>
           <Stack
             gap={5}
             maxWidth={800}
@@ -35,12 +35,12 @@ export default function Extrato() {
             alignItems="center"
           >
             <Stack maxWidth={200}>
+              <ExtratoMounthSelect />
               <Stack
                 direction="row"
                 display="flex"
                 justifyContent="space-between"
               >
-                <ExtratoMounthSelect />
                 <ExtratoFilterOptions />
               </Stack>
             </Stack>
@@ -104,11 +104,6 @@ export default function Extrato() {
                     tipo: "Despesa",
                   },
                 ]}
-              />
-              <ExtratoCategoriaSaldo
-                valorBalancoMensal={500}
-                valorReceitas={10000}
-                valorDespesas={1200}
               />
             </Grid>
           </Stack>

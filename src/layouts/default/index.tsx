@@ -2,6 +2,7 @@ import styles from "../styles/layoutDefault.module.scss";
 import { FaRegBell } from "react-icons/fa";
 import Avatar from "@mui/material/Avatar";
 import { Stack, Typography } from "@mui/material";
+
 interface DefaultLayoutProps {
   userName: string;
   left?: React.ReactNode;
@@ -61,7 +62,6 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
                 sx={{
                   height: 30,
                   width: 30,
-                  backgroundColor: stringToColor(userName),
                 }}
               />
               <Typography variant="body1">{userName}</Typography>
@@ -70,6 +70,9 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
         </nav>
       </header>
       {left && <div className={styles.left_container}>{left}</div>}
+      <div className={styles.content_container}>
+        {/* O conteúdo principal vai aqui */}
+      </div>
     </>
   );
 }
