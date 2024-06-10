@@ -8,6 +8,8 @@ import NewDespesaModal from "@/components/new-action/new-action-modal/new-despes
 import NewDespesaCartaoModal from "@/components/new-action/new-action-modal/new-despesa-cartao-modal";
 import NewTransacaoModal from "@/components/new-action/new-action-modal/new-transacao-modal";
 import DefaultLayout from "@/layouts/default";
+import { useRouter } from "next/router";
+import PublicLayout from "@/layouts/public";
 
 dotenv.config();
 
@@ -30,9 +32,15 @@ export default function App({ Component, pageProps }: AppProps) {
     postNewReceita,
   } = useNewActionController();
 
+  const router = useRouter();
+
   return (
     <>
-      <DefaultLayout userName="Juan Fernandes" />
+      {router.pathname !== "/login" ? (
+        <DefaultLayout userName="Juan Fernandes" />
+      ) : (
+        <PublicLayout />
+      )}
       <Component {...pageProps} />
       <NewActionFloatButton
         handleOpenNewReceita={handleOpenModal}

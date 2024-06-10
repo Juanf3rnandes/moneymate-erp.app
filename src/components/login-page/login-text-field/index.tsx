@@ -1,15 +1,5 @@
-import {
-  Button,
-  Card,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, FormControl, Grid, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 
@@ -17,16 +7,21 @@ import {
   postLoginRequest,
   postRegisterRequest,
 } from "@/services/accounts/types";
+import { Form } from "@/providers";
 
 interface LoginTextFieldProps {
-  formLogin: postLoginRequest;
+  formLogin: Form<postLoginRequest>;
   formCadastro: postRegisterRequest;
   activeFormButton: string;
   handleButtonClick: (button: string) => void;
   onSave: () => void;
+  onRegister: () => void;
 }
 
-export default function LoginTextField() {
+export default function LoginTextField({
+  formLogin,
+  onSave,
+}: LoginTextFieldProps) {
   const [activeButton, setActiveButton] = useState("entrar");
 
   const handleButtonClick = (button: any) => {
@@ -59,15 +54,19 @@ export default function LoginTextField() {
                     required
                     variant="standard"
                     placeholder="E-mail/Usuário"
+                    value={formLogin.value.email}
+                    onChange={formLogin.set("email")}
                   ></TextField>
                   <TextField
                     required
                     variant="standard"
                     placeholder="Senha"
                     type="password"
+                    value={formLogin.value.password}
+                    onChange={formLogin.set("password")}
                   />
                 </Stack>
-                <Button>Entrar</Button>
+                <Button onClick={onSave}>Entrar</Button>
               </FormControl>
             ) : (
               <FormControl>

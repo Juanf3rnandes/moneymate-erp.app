@@ -1,5 +1,5 @@
 // pages/RelatorioReceitaDespesa.js
-import { Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import LineChart from "../line-chart";
 
 interface RelatorioReceitaDespesaProps {
@@ -37,7 +37,7 @@ export default function RelatorioReceitaDespesa({
       },
       title: {
         display: true,
-        text: "Relatório de Receitas e Despesas",
+        text: "Receitas x Despesas",
       },
     },
   };
@@ -46,10 +46,9 @@ export default function RelatorioReceitaDespesa({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Typography variant="h6">Receitas x Despesa</Typography>
-        </Grid>
-        <Grid item>
-          <LineChart data={data} options={options} />
+          <Box width="800px" height="400px">
+            <LineChart data={data} options={options} />
+          </Box>
         </Grid>
       </Grid>
     </Card>

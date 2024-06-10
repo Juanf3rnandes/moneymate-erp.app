@@ -13,35 +13,9 @@ export default function useHomePageController() {
   const [despesas, setDespesas] = React.useState<number>(1100);
   const [despesaVencida, setDespesaVencida] = React.useState<boolean>(false);
 
-  const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>([
-    {
-      data: new Date(),
-      descricao: "Compra no mercado",
-      valor: 100,
-      tipoTransacao: 2,
-      cod_cartao: null,
-      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
-      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
-    },
-    {
-      data: new Date(),
-      descricao: "Compra no mercado",
-      valor: 100,
-      tipoTransacao: 2,
-      cod_cartao: null,
-      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
-      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
-    },
-    {
-      data: new Date(),
-      descricao: "Compra no mercado",
-      valor: 100,
-      tipoTransacao: 2,
-      cod_cartao: null,
-      id: "8692b055-a456-4b25-b3ba-c33ba231c26c",
-      idConta: "8692b055-a456-4b25-b3ba-c33ba231c26a",
-    },
-  ]);
+  const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>(
+    []
+  );
 
   const vencimentoDespesa = React.useCallback(() => {
     const despesas = transacoes.filter(

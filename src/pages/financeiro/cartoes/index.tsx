@@ -13,8 +13,9 @@ export default function Cartoes() {
 
   return (
     <>
+      <title>Financeiro | Cartões</title>
       <Grid container m={2}>
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs aria-label="breadcrumb" separator="-">
           <Link underline="hover" color="inherit" href="/">
             Home
           </Link>
