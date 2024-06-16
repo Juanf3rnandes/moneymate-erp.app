@@ -1,18 +1,21 @@
 import React from "react";
-import { getCartoesResponse } from "@/services/cadastro/types";
-import { useForm } from "@/providers";
+import { getCartaoResponse } from "@/services/cadastro/cartao/types";
+import { useAct, useForm, useService } from "@/providers";
 import {
   TipoTransacao,
   postTransacaoRequest,
 } from "@/services/cadastro/transacao/types";
+import { CartaoService } from "@/services/cadastro/cartao";
 
 export default function useFinanceiroController() {
   const [modalNewDespesaIsOpen, setModalNewDespesaIsOpen] =
     React.useState<boolean>(false);
 
-  const [cartoesList, setCartoesList] = React.useState<getCartoesResponse[]>(
-    []
-  );
+  const [cartoesList, setCartoesList] = React.useState<getCartaoResponse[]>([]);
+
+  const services = useService((h) => ({
+    cartao: new CartaoService(h),
+  }));
 
   const formCreateDespesaCartao = useForm<postTransacaoRequest>(
     {
@@ -27,6 +30,19 @@ export default function useFinanceiroController() {
     },
     (f) => !!f.cod_pessoa && !!f.cod_cartao
   );
+
+  const getCartaoAction = useAct(
+    () => services.cartao.getCartao({ cod_pessoa: 44365 }),
+    {
+      onSuccess(response) {
+        setCartoesList(response.results.data);
+      },
+    }
+  );
+
+  const handleGetCartoes = () => {
+    getCartaoAction();
+  };
 
   const handleOpenModalNewDespesa = () => {
     setModalNewDespesaIsOpen(!modalNewDespesaIsOpen);
@@ -46,10 +62,16 @@ export default function useFinanceiroController() {
 
   //?? ao iniciar
 
+  React.useEffect(() => {
+    handleGetCartoes();
+  }, []);
+
   return {
     cartoesList,
+    getCartaoAction,
     formCreateDespesaCartao,
     modalNewDespesaIsOpen,
+    handleGetCartoes,
     handleOpenModalNewDespesa,
     modalStyle,
   };

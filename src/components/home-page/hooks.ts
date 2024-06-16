@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { format } from "date-fns";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import { randomUUID } from "crypto";
-import { useService } from "@/providers";
+import { useAct, useService } from "@/providers";
 import { TransacaoService } from "@/services/cadastro/transacao";
 
 export default function useHomePageController() {
@@ -22,6 +22,15 @@ export default function useHomePageController() {
   const services = useService((h) => ({
     login: new TransacaoService(h),
   }));
+
+  const getTransacoesAction = useAct(
+    () => services.login.getTransacao({ cod_pessoa: 44365 }),
+    {
+      onSuccess(response) {
+        setTransacoes(response.results.data);
+      },
+    }
+  );
 
   const vencimentoDespesa = React.useCallback(() => {
     const despesas = transacoes.filter(
@@ -47,14 +56,20 @@ export default function useHomePageController() {
     }
   };
 
+  const handleGetTransacoes = () => {
+    getTransacoesAction();
+  };
+
   //?? ao iniciar
   React.useEffect(() => {
     handleHomeGreetings();
-  }, [date]);
+    handleGetTransacoes();
+  }, []);
 
   return {
     homeGreeting,
     date,
+    getTransacoesAction,
     balancoSaldo,
     receitas,
     despesas,
@@ -62,6 +77,7 @@ export default function useHomePageController() {
     formattedDate,
     despesaVencida,
     handleHomeGreetings,
+    handleGetTransacoes,
     useEffect,
   };
 }

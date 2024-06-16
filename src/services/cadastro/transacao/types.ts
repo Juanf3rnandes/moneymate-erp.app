@@ -1,3 +1,4 @@
+import { ISODate } from "@/providers/utils/types";
 import { UUID } from "crypto";
 
 export enum TipoTransacao {
@@ -29,7 +30,7 @@ export interface getTransacaoResponse {
   nomeTransacao: string;
   tipoTransacao: TipoTransacao;
   valor: number;
-  data: Date;
+  data: ISODate;
   cod_cartao: number | null;
   idConta: UUID;
 }

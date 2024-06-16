@@ -10,7 +10,6 @@ import NewTransacaoModal from "@/components/new-action/new-action-modal/new-tran
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import PublicLayout from "@/layouts/public";
-import { authConfig, useAuth } from "@/auth";
 import { AuthConfig, AuthProvider } from "@/auth";
 
 dotenv.config();
@@ -38,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <AuthProvider configs={authConfig}>
+      <AuthProvider configs={AuthConfig}>
         {router.pathname !== "/login" ? (
           <DefaultLayout userName="teste juan" />
         ) : (

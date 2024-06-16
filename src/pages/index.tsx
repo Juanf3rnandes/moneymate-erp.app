@@ -25,7 +25,9 @@ export default function Home() {
 
   const {
     homeGreeting,
+    getTransacoesAction,
     handleHomeGreetings,
+    handleGetTransacoes,
     formattedDate,
     balancoSaldo,
     receitas,
@@ -35,26 +37,32 @@ export default function Home() {
   } = useHomePageController();
 
   return (
-    <Grid m={3}>
-      {despesaVencida && <HomeVencimentoDespesaAlert />}
-      <HomeGreetings
-        userName=""
-        greeting={homeGreeting}
-        dateResumo={formattedDate}
-      />
+    <>
+      <title> Moneymate | Home</title>
+      <Grid m={3}>
+        {despesaVencida && <HomeVencimentoDespesaAlert />}
+        <HomeGreetings
+          userName=""
+          greeting={homeGreeting}
+          dateResumo={formattedDate}
+        />
 
-      <Grid
-        display="flex"
-        direction="row"
-        justifyContent="space-around"
-        alignItems="center"
-      >
-        <HomeCartaoResumo cartoes={[]} />
-        <HomeContasPerformance />
+        <Grid
+          display="flex"
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+        >
+          <HomeCartaoResumo cartoes={[]} />
+          <HomeContasPerformance />
+        </Grid>
+        <Grid container>
+          <HomeUltimasTransacoes
+            transacoes={transacoes}
+            actionTransacoes={getTransacoesAction}
+          />
+        </Grid>
       </Grid>
-      <Grid container>
-        <HomeUltimasTransacoes transacoes={transacoes} />
-      </Grid>
-    </Grid>
+    </>
   );
 }

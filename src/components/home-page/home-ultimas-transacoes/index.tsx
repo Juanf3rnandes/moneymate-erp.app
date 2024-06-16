@@ -1,15 +1,17 @@
+import { Action } from "@/providers";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { compareAsc, format } from "date-fns";
-
+import { parseISO } from "date-fns";
 interface HomeUltimasTransacoesProps {
   transacoes: getTransacaoResponse[];
+  actionTransacoes: Action;
 }
 
 export default function HomeUltimasTransacoes({
   transacoes,
+  actionTransacoes,
 }: HomeUltimasTransacoesProps) {
   return (
     <Card>
@@ -24,7 +26,11 @@ export default function HomeUltimasTransacoes({
         <Button variant="contained">Extrato completo</Button>
       </Stack>
       <CardContent>
-        {transacoes.length > 0 ? (
+        {actionTransacoes.loading ? (
+          <Grid spacing={2}>
+            <Skeleton variant="rectangular" animation="wave" />
+          </Grid>
+        ) : transacoes.length > 0 ? (
           <Stack direction="column" justifyContent="space-between" spacing={2}>
             {transacoes.map((transacao, index) => (
               <Box
@@ -38,10 +44,10 @@ export default function HomeUltimasTransacoes({
                 }}
               >
                 <Typography variant="body1" sx={{ flex: 1 }}>
-                  {transacao.data.toLocaleString().split(" ")[0]}
+                  {parseISO(transacao.data).toLocaleString()}
                 </Typography>
                 <Typography variant="body1" sx={{ flex: 2 }}>
-                  {transacao.descricao}
+                  {transacao.nomeTransacao}
                 </Typography>
                 <Typography
                   variant="body1"
