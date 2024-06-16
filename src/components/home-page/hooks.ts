@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { format } from "date-fns";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import { randomUUID } from "crypto";
+import { useService } from "@/providers";
+import { TransacaoService } from "@/services/cadastro/transacao";
 
 export default function useHomePageController() {
   const [userName, setUserName] = React.useState<string>("");
@@ -11,11 +13,15 @@ export default function useHomePageController() {
   const [balancoSaldo, setBalancoSaldo] = React.useState<number>(-1000);
   const [receitas, setReceitas] = React.useState<number>(100);
   const [despesas, setDespesas] = React.useState<number>(1100);
-  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(false);
+  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(true);
 
   const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>(
     []
   );
+
+  const services = useService((h) => ({
+    login: new TransacaoService(h),
+  }));
 
   const vencimentoDespesa = React.useCallback(() => {
     const despesas = transacoes.filter(
@@ -41,7 +47,8 @@ export default function useHomePageController() {
     }
   };
 
-  useEffect(() => {
+  //?? ao iniciar
+  React.useEffect(() => {
     handleHomeGreetings();
   }, [date]);
 

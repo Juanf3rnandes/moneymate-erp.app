@@ -7,11 +7,17 @@ export enum TipoTransacao {
 
 export interface postTransacaoRequest {
   valor: number;
-  descricao: string;
+  nomeTransacao: string;
   conta: string;
   cod_pessoa: number;
   tipo: TipoTransacao;
   data: Date;
+  cod_cartao: number | null;
+  despesaFixa: boolean;
+}
+
+export interface postTransacaoResponse {
+  message: string;
 }
 
 export interface getTransacaoRequest {
@@ -20,7 +26,7 @@ export interface getTransacaoRequest {
 
 export interface getTransacaoResponse {
   id: UUID;
-  descricao: string;
+  nomeTransacao: string;
   tipoTransacao: TipoTransacao;
   valor: number;
   data: Date;

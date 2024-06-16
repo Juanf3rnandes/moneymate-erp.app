@@ -1,4 +1,5 @@
-import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
+import { Form } from "@/providers";
+import { postTransacaoRequest } from "@/services/cadastro/transacao/types";
 import {
   Box,
   Button,
@@ -16,7 +17,8 @@ interface addNewDespesaCartaoModalProps {
   opened: boolean;
   handleClose: () => void;
   onSave?: () => void;
-  formNewDespesaCartao?: postDespesaCartaoRequest;
+  configModal: object;
+  formNewDespesaCartao: Form<postTransacaoRequest>;
 }
 
 export default function AddNewDespesaCartaoModal({
@@ -24,48 +26,60 @@ export default function AddNewDespesaCartaoModal({
   handleClose,
   onSave,
   formNewDespesaCartao,
+  configModal,
 }: addNewDespesaCartaoModalProps) {
-  const styleModalContainer = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: 5,
-    p: 4,
-  };
-
   return (
     <Grid>
       <Modal open={opened} onClose={handleClose}>
-        <Box sx={styleModalContainer}>
-          <Stack gap={3}>
-            <Typography variant="h5">Nova despesa cartão de crédito</Typography>
-            <FormControl>
-              <Stack gap={2}>
-                <TextField placeholder="R$ 0,00" />
-                <TextField placeholder="Descricao" />
-                <TextField type="date" placeholder="data da transação" />
-              </Stack>
+        <Box sx={configModal}>
+          <Grid>
+            <Stack gap={3}>
+              <Typography variant="h5">
+                Nova despesa cartão de crédito
+              </Typography>
+              <FormControl>
+                <Stack gap={5}>
+                  <TextField
+                    placeholder="R$ 0,00"
+                    variant="standard"
+                    value={formNewDespesaCartao.value.valor}
+                    onChange={(e) =>
+                      formNewDespesaCartao.set("valor")(e.target.value)
+                    }
+                  />
+                  <TextField
+                    placeholder="Descricao"
+                    variant="standard"
+                    value={formNewDespesaCartao.value.nomeTransacao}
+                    onChange={(e) =>
+                      formNewDespesaCartao.set("nomeTransacao")(e.target.value)
+                    }
+                  />
+                  <TextField
+                    type="date"
+                    placeholder="data da transação"
+                    variant="standard"
+                    value={formNewDespesaCartao.value.data}
+                    onChange={(e) =>
+                      formNewDespesaCartao.set("data")(e.target.value)
+                    }
+                  />
+                </Stack>
+              </FormControl>
               <FormControlLabel
-                control={<Switch color="primary" />}
-                label="Parcelado"
-              ></FormControlLabel>
-              {formNewDespesaCartao?.parcelado && (
-                <Grid>
+                control={
                   <FormControl>
-                    <Stack gap={2}>
-                      <TextField placeholder="Valor mensal" />
-                      <TextField placeholder="Quantidade de meses" />
-                    </Stack>
+                    <Switch value={formNewDespesaCartao.value.despesaFixa} />
                   </FormControl>
-                </Grid>
-              )}
-            </FormControl>
-          </Stack>
-          <Button>Salvar</Button>
+                }
+                label="Despesa Fixa"
+              />
+            </Stack>
+          </Grid>
+          <Grid>
+            <Button>Cancelar</Button>
+            <Button onClick={onSave}>Salvar</Button>
+          </Grid>
         </Box>
       </Modal>
     </Grid>

@@ -1,31 +1,56 @@
 import React from "react";
 import { getCartoesResponse } from "@/services/cadastro/types";
+import { useForm } from "@/providers";
+import {
+  TipoTransacao,
+  postTransacaoRequest,
+} from "@/services/cadastro/transacao/types";
 
 export default function useFinanceiroController() {
   const [modalNewDespesaIsOpen, setModalNewDespesaIsOpen] =
     React.useState<boolean>(false);
 
-  const [cartoesList, setCartoesList] = React.useState<getCartoesResponse[]>([
+  const [cartoesList, setCartoesList] = React.useState<getCartoesResponse[]>(
+    []
+  );
+
+  const formCreateDespesaCartao = useForm<postTransacaoRequest>(
     {
-      id: 1,
-      cod_pessoa: 123456,
-      numero: "1234 5678 9012 3456",
-      bandeira: "Visa",
-      tipo: "Crédito",
-      limite: 5000,
-      descricao: "Cartão de crédito principal",
-      diaFechamento: 25,
-      diaVencimento: 10,
+      cod_pessoa: 0,
+      conta: "",
+      data: new Date(),
+      nomeTransacao: "",
+      tipo: TipoTransacao.despesa,
+      valor: 0,
+      cod_cartao: 0,
+      despesaFixa: false,
     },
-  ]);
+    (f) => !!f.cod_pessoa && !!f.cod_cartao
+  );
 
   const handleOpenModalNewDespesa = () => {
     setModalNewDespesaIsOpen(!modalNewDespesaIsOpen);
   };
 
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "none",
+    borderRadius: 2,
+    p: 4,
+  };
+
+  //?? ao iniciar
+
   return {
     cartoesList,
+    formCreateDespesaCartao,
     modalNewDespesaIsOpen,
     handleOpenModalNewDespesa,
+    modalStyle,
   };
 }

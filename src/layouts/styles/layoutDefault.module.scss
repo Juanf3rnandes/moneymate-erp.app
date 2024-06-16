@@ -2,10 +2,11 @@
 
 .header_container {
   background: rgb(8, 51, 80);
-  padding: 0.2rem;
   margin: 0 auto;
-  position: relative;
-  top: 0px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 .nav_menu {
@@ -33,23 +34,13 @@
   }
 }
 
-.left_container {
-  background: rgb(8, 51, 80);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 75px;
-  transition: width 0.75s ease;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+.content_container {
+  margin-left: 80px;
+  transition: margin-left 0.75s ease;
 }
 
-.content_container {
-  margin-left: 80px; // Ajusta conforme a largura do left_container
-  transition: margin-left 0.75s ease;
+.left_container {
+  background: rgb(8, 51, 80);
 }
 
 @media (max-width: 768px) {

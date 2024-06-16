@@ -15,10 +15,14 @@ import HomeUltimasTransacoes from "@/components/home-page/home-ultimas-transacoe
 import HomeCartaoResumo from "@/components/home-page/home-cartao-resumo";
 import HomeVencimentoDespesaAlert from "@/components/home-page/home-vencimento-despesa-alert";
 import HomeContasPerformance from "@/components/home-page/home-contas-performance";
+import { useAuth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const auth = useAuth();
+  const userName = auth?.user;
+
   const {
     homeGreeting,
     handleHomeGreetings,
@@ -34,7 +38,7 @@ export default function Home() {
     <Grid m={3}>
       {despesaVencida && <HomeVencimentoDespesaAlert />}
       <HomeGreetings
-        userName="Juan Fernandes"
+        userName=""
         greeting={homeGreeting}
         dateResumo={formattedDate}
       />

@@ -1,5 +1,4 @@
 import { getMenuFuncionalidadesErpResponse } from "@/services/cadastro/types";
-import Image from "next/image";
 interface AppContentProps {
   items?: getMenuFuncionalidadesErpResponse[];
 }

@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 
 interface HomeGreetingsProps {
-  userName: string;
+  userName: string | undefined;
   greeting: string;
   dateResumo: string;
 }

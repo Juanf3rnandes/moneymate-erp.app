@@ -3,12 +3,15 @@ import useRelatorioController from "@/components/financeiro-page/relatorios-page
 import RelatorioEvolucaoGastos from "@/components/financeiro-page/relatorios-page/relatorio-evolucao-gastos";
 import { Grid, Breadcrumbs, Link, Typography, Box } from "@mui/material";
 import RelatorioCategoriaDespesa from "@/components/financeiro-page/relatorios-page/relatorio-categoria-gastos";
+import RelatorioGastosCartao from "@/components/financeiro-page/relatorios-page/relatorios-gastos-cartao";
 
 export default function Relatorios() {
   const {
     graphConfigEvolucaoGraficos,
     graphConfigRelatorioCategoriaDespesa,
+    configGraphGastosCartao,
     categoriaDespesa,
+    gastosCartao,
   } = useRelatorioController();
 
   return (
@@ -32,7 +35,8 @@ export default function Relatorios() {
               <RelatorioReceitaDespesa />
             </Grid>
             <Grid item xs={12} md={4}>
-              <RelatorioEvolucaoGastos
+              <RelatorioGastosCartao
+                data={gastosCartao}
                 graphConfig={graphConfigEvolucaoGraficos}
               />
             </Grid>

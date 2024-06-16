@@ -1,13 +1,27 @@
-import { postLoginRequest, loginResponse } from "./types";
+import {
+  postLoginRequest,
+  loginResponse,
+  postRegisterRequest,
+  postRegisterResponse,
+} from "./types";
+import axios from "axios";
+import { backendConfig } from "@/config";
 
-import { Http } from "@/providers/http/utils";
 export class LoginService {
-  constructor(private http: Http) {}
+  constructor() {}
 
   async postLogin(params: postLoginRequest) {
-    return this.http.post<loginResponse>(`WS/login`, {
-      baseURL: "localhost:3001",
-      params,
-    });
+    return axios
+      .post<loginResponse>(`${backendConfig.accounts}/login`, params)
+      .then((res) =>
+        sessionStorage.setItem("moneymate.erp", JSON.stringify(res.data))
+      );
+  }
+
+  async postRegister(params: postRegisterRequest) {
+    return axios.post<postRegisterResponse>(
+      `${backendConfig.accounts}/registro`,
+      params
+    );
   }
 }

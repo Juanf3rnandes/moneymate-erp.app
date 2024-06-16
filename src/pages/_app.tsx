@@ -10,6 +10,8 @@ import NewTransacaoModal from "@/components/new-action/new-action-modal/new-tran
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import PublicLayout from "@/layouts/public";
+import { authConfig, useAuth } from "@/auth";
+import { AuthConfig, AuthProvider } from "@/auth";
 
 dotenv.config();
 
@@ -36,55 +38,59 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {router.pathname !== "/login" ? (
-        <DefaultLayout userName="Juan Fernandes" />
-      ) : (
-        <PublicLayout />
-      )}
-      <Component {...pageProps} />
-      <NewActionFloatButton
-        handleOpenNewReceita={handleOpenModal}
-        handleOpenNewDespesa={handleDespesaModal}
-        handleOpenNewDespesaCartao={handleDespesaCartaoModal}
-        handleOpenNewTransacao={handleTransacaoModal}
-      />
+      <AuthProvider configs={authConfig}>
+        {router.pathname !== "/login" ? (
+          <DefaultLayout userName="teste juan" />
+        ) : (
+          <PublicLayout />
+        )}
 
-      {newReceitaModalmodalOpened && (
-        <NewReceitaModal
-          postNewReceita={postNewReceita}
-          formAddReceita={addNewReceitaForm}
-          opened={newReceitaModalmodalOpened}
-          handleModal={handleOpenModal}
-          onSave={handlePostNewReceita}
-          style={modalStyle}
-        />
-      )}
+        <Component {...pageProps} />
 
-      {newDespesaModalmodalOpened && (
-        <NewDespesaModal
-          opened={newDespesaModalmodalOpened}
-          addNewDespesaForm={addnewDespesaForm}
-          handleModal={handleDespesaModal}
-          style={modalStyle}
+        <NewActionFloatButton
+          handleOpenNewReceita={handleOpenModal}
+          handleOpenNewDespesa={handleDespesaModal}
+          handleOpenNewDespesaCartao={handleDespesaCartaoModal}
+          handleOpenNewTransacao={handleTransacaoModal}
         />
-      )}
 
-      {newDespesaCartaoOpened && (
-        <NewDespesaCartaoModal
-          addNewDespesaCartaoForm={addDespesaCartaoForm}
-          handleModal={handleDespesaCartaoModal}
-          opened={newDespesaCartaoOpened}
-          style={modalStyle}
-        />
-      )}
-      {NewTransacaoModal && (
-        <NewTransacaoModal
-          opened={newTransacaoOpened}
-          form={addTransacaoForm}
-          handleModal={handleTransacaoModal}
-          style={modalStyle}
-        />
-      )}
+        {newReceitaModalmodalOpened && (
+          <NewReceitaModal
+            postNewReceita={postNewReceita}
+            formAddReceita={addNewReceitaForm}
+            opened={newReceitaModalmodalOpened}
+            handleModal={handleOpenModal}
+            onSave={handlePostNewReceita}
+            style={modalStyle}
+          />
+        )}
+
+        {newDespesaModalmodalOpened && (
+          <NewDespesaModal
+            opened={newDespesaModalmodalOpened}
+            addNewDespesaForm={addnewDespesaForm}
+            handleModal={handleDespesaModal}
+            style={modalStyle}
+          />
+        )}
+
+        {newDespesaCartaoOpened && (
+          <NewDespesaCartaoModal
+            addNewDespesaCartaoForm={addDespesaCartaoForm}
+            handleModal={handleDespesaCartaoModal}
+            opened={newDespesaCartaoOpened}
+            style={modalStyle}
+          />
+        )}
+        {NewTransacaoModal && (
+          <NewTransacaoModal
+            opened={newTransacaoOpened}
+            form={addTransacaoForm}
+            handleModal={handleTransacaoModal}
+            style={modalStyle}
+          />
+        )}
+      </AuthProvider>
     </>
   );
 }
