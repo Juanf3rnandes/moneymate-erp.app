@@ -23,6 +23,6 @@ export interface getCartoesResponse {
   tipo: string;
   limite: number;
   descricao: string;
-  diaFechamento: number;
-  diaVencimento: number;
+  dia_fechamento: number;
+  dia_vencimento: number;
 }

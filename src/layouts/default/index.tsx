@@ -48,8 +48,8 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
                 <Image
                   src={logoImage}
                   alt="logo money mate"
-                  height={60}
-                  width={200}
+                  height={50}
+                  width={150}
                 />
               </Link>
             </div>

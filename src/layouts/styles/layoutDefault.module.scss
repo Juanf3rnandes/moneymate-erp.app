@@ -3,8 +3,8 @@
 .header_container {
   background: rgb(8, 51, 80);
   margin: 0 auto;
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: 0px;
   z-index: 1000;
   box-sizing: border-box;
 }

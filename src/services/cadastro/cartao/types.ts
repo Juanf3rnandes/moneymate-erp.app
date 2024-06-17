@@ -17,3 +17,11 @@ export interface postDespesaCartaoRequest {
   valorParcela: number;
   numeroParcelas: number;
 }
+
+export interface deleteCartaoRequest {
+  idCartao: number;
+}
+
+export interface deleteCartaoResponse {
+  message: string;
+}

@@ -8,6 +8,9 @@ import {
   Stack,
   Typography,
   Divider,
+  MenuItem,
+  Menu,
+  IconButton,
 } from "@mui/material";
 import LinearProgress, {
   LinearProgressProps,
@@ -18,13 +21,30 @@ interface CartoesListProps {
   cartoes: getCartoesResponse[];
   openAddNewDespesaModal: () => void;
   valorFatura?: number;
+  handleSetOnRef: (
+    event: React.MouseEvent<HTMLElement>,
+    cardID: number
+  ) => void;
+  handleRefOnClose: () => void;
+  handleDeleteModal: () => void;
+  handleEditModal: () => void;
+  anchorEl: null | HTMLElement;
+  selectedCard: null | number;
 }
 
 export default function CartoesList({
   cartoes,
   valorFatura,
   openAddNewDespesaModal,
+  handleSetOnRef,
+  anchorEl,
+  selectedCard,
+  handleRefOnClose,
+  handleDeleteModal,
+  handleEditModal,
 }: CartoesListProps) {
+  const open = Boolean(anchorEl);
+
   const LinearProgressWithLabel = (
     props: LinearProgressProps & { value: number; comparisonValue: number }
   ) => {
@@ -57,14 +77,34 @@ export default function CartoesList({
                 m={2}
                 gap={2}
               >
-                <Typography variant="h6">{cartao.descricao}</Typography>
-                <Button>
-                  <MoreVertIcon />
-                </Button>
+                <Typography variant="h6">
+                  {cartao.descricao === ""
+                    ? `cartão ${cartao.bandeira}`
+                    : cartao.descricao}
+                </Typography>
+
+                <Grid item m={1}>
+                  <IconButton
+                    aria-controls="long-menu"
+                    aria-haspopup="true"
+                    onClick={(event) => handleSetOnRef(event, cartao.id)}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </Grid>
+                <Menu
+                  id="long-menu"
+                  anchorEl={anchorEl}
+                  open={open && selectedCard === cartao.id}
+                  onClose={handleRefOnClose}
+                >
+                  <MenuItem onClick={handleEditModal}>Editar</MenuItem>
+                  <MenuItem onClick={handleDeleteModal}>Excluir</MenuItem>
+                </Menu>
               </Grid>
 
               <Stack m={2}>
-                {cartao.diaFechamento > new Date().getDay() ? (
+                {cartao.dia_fechamento > new Date().getDay() ? (
                   <Typography variant="h6">Fatura aberta</Typography>
                 ) : (
                   <Typography variant="body2">Fatura fechada</Typography>
@@ -76,10 +116,10 @@ export default function CartoesList({
                   </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="body2">Fecha em </Typography>
-                  <Typography variant="body1">{`${
-                    cartao.diaFechamento
-                  }/${new Date().getMonth().toLocaleString()}`}</Typography>
+                  <Typography variant="body2">Fecha em</Typography>
+                  <Typography variant="body1">{`${cartao.dia_fechamento}/${
+                    new Date().getMonth() + 1
+                  }`}</Typography>
                 </Stack>
               </Stack>
               <Stack m={2}>

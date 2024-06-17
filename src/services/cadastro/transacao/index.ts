@@ -9,6 +9,8 @@ export class TransacaoService {
   constructor() {}
 
   async getTransacao(params: getTransacaoRequest) {
-    return axios.get(`${backendConfig.cadastro}/transacoes/${params}`);
+    return axios.get(
+      `${backendConfig.cadastro}/transacoes/${params.cod_pessoa}`
+    );
   }
 }
