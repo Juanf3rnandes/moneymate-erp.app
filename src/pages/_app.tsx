@@ -37,11 +37,13 @@ export default function App({ Component, pageProps }: AppProps) {
   } = useNewActionController();
 
   const router = useRouter();
+  //teste
 
   return (
     <>
       <AuthProvider configs={authConfig}>
         {router.pathname !== "/login" ? (
+          
        <>
           <DefaultLayout userName="teste juan" />
           <NewActionFloatButton
