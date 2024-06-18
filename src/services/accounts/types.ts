@@ -4,7 +4,7 @@ export interface postLoginRequest {
 }
 
 export interface loginResponse {
-  nome: string;
+  name: string;
   email: string;
   bearerToken: string;
   cod_pessoa: number;

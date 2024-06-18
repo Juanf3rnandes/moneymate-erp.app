@@ -11,11 +11,7 @@ export class LoginService {
   constructor() {}
 
   async postLogin(params: postLoginRequest) {
-    return axios
-      .post<loginResponse>(`${backendConfig.accounts}/login`, params)
-      .then((res) =>
-        sessionStorage.setItem("moneymate.erp", JSON.stringify(res.data))
-      );
+    return axios.post(`${backendConfig.accounts}/login`, params);
   }
 
   async postRegister(params: postRegisterRequest) {

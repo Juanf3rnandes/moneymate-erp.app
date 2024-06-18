@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, MouseEvent, ChangeEvent } from "react";
 import {
   Card,
   Grid,
@@ -7,15 +7,15 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
 } from "@mui/material";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import emptyImage from "../../../../../public/assets/imgs/transacoes-empty.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -45,6 +45,23 @@ export default function ExtratoTransacoesList({
   handleEditTransacaoModal,
 }: ExtratoTransacoesListProps) {
   const open = Boolean(achorEl);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <Card>
       <Grid container>
@@ -69,54 +86,56 @@ export default function ExtratoTransacoesList({
             </TableHead>
             <TableBody>
               {transacoes.length > 0 ? (
-                transacoes.map((transacao) => (
-                  <TableRow
-                    key={transacao.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell align="center">
-                      {parseISO(transacao.data).toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center">
-                      {transacao.nomeTransacao}
-                    </TableCell>
-                    <TableCell align="center">
-                      {transacao.tipoTransacao == 1 ? "Receita" : "Despesa"}
-                    </TableCell>
-                    <TableCell align="center">
-                      {transacao.nomeTransacao}
-                    </TableCell>
-                    <TableCell align="center">
-                      {`R$ ${transacao.valor.toFixed(2)}`}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Grid item m={1}>
-                        <IconButton
-                          aria-controls="long-menu"
-                          aria-haspopup="true"
-                          onClick={(event) =>
-                            handleSetOnRef(event, transacao.id)
-                          }
+                transacoes
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((transacao) => (
+                    <TableRow
+                      key={transacao.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center">
+                        {parseISO(transacao.data).toLocaleString()}
+                      </TableCell>
+                      <TableCell align="center">
+                        {transacao.nomeTransacao}
+                      </TableCell>
+                      <TableCell align="center">
+                        {transacao.tipoTransacao == 1 ? "Receita" : "Despesa"}
+                      </TableCell>
+                      <TableCell align="center">
+                        {transacao.nomeTransacao}
+                      </TableCell>
+                      <TableCell align="center">
+                        {`R$ ${transacao.valor.toFixed(2)}`}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Grid item m={1}>
+                          <IconButton
+                            aria-controls="long-menu"
+                            aria-haspopup="true"
+                            onClick={(event) =>
+                              handleSetOnRef(event, transacao.id)
+                            }
+                          >
+                            <MoreHorizIcon />
+                          </IconButton>
+                        </Grid>
+                        <Menu
+                          id="transacoes-page-table-action"
+                          anchorEl={achorEl}
+                          open={open && selectedTransacao === transacao.id}
+                          onClose={handleRefOnClose}
                         >
-                          <MoreHorizIcon />
-                        </IconButton>
-                      </Grid>
-                      <Menu
-                        id="transacoes-page-table-action"
-                        anchorEl={achorEl}
-                        open={open && selectedTransacao === transacao.id}
-                        onClose={handleRefOnClose}
-                      >
-                        <MenuItem onClick={handleEditTransacaoModal}>
-                          Editar
-                        </MenuItem>
-                        <MenuItem onClick={handleDeleteTransacaoModal}>
-                          Excluir
-                        </MenuItem>
-                      </Menu>
-                    </TableCell>
-                  </TableRow>
-                ))
+                          <MenuItem onClick={handleEditTransacaoModal}>
+                            Editar
+                          </MenuItem>
+                          <MenuItem onClick={handleDeleteTransacaoModal}>
+                            Excluir
+                          </MenuItem>
+                        </Menu>
+                      </TableCell>
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={5}>
@@ -137,6 +156,15 @@ export default function ExtratoTransacoesList({
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={transacoes.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Grid>
     </Card>
   );

@@ -6,7 +6,6 @@ import {
 } from "@/services/accounts/types";
 import { LoginService } from "@/services/accounts";
 import { useAuth } from "@/auth";
-import { saveCookie } from "@/providers";
 import { useRouter } from "next/router";
 
 export default function useLoginController() {
@@ -47,7 +46,8 @@ export default function useLoginController() {
       }),
 
     {
-      onSuccess: () => {
+      onSuccess(response) {
+        auth.authOn(response.results.data);
         router.push("/");
       },
       onError: () => {

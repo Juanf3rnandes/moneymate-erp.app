@@ -1,9 +1,5 @@
 import React, { ReactNode, useState, createContext, useContext } from "react";
-import { useRouter } from "next/router";
 import { AuthConfig, IAuthContext, User } from "./types";
-import { camelCaseProps } from "@/providers";
-import { parseJwt } from "@/providers/utils/crypto";
-import { loadCache, removeCache } from "@/providers/utils/cache";
 
 export type { AuthConfig, User };
 
@@ -15,60 +11,73 @@ interface AuthProviderProps {
   children?: ReactNode;
 }
 
-function factoryUser(accessToken?: string): User | undefined {
-  if (accessToken) {
-    const jwt = parseJwt(accessToken);
-    const obj = camelCaseProps(jwt);
-    return {
-      ...obj,
-      codPessoa: Number(obj.codPessoa),
-      email: obj.email || "",
-      login: obj.login || "",
-      nome: obj.nome || "",
-    } as User;
-  }
-  return undefined;
-}
+export const authConfig: AuthConfig = {
+  accessTokenKey: "",
+  erpTokenKey: "",
+  redirectToKey: "redirectKey",
+  afterLoginPath: "/",
+};
 
 export function AuthProvider({ configs, children }: AuthProviderProps) {
-  const router = useRouter();
-  const [accessToken, setAccessToken] = useState<string>();
   const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
 
-  const authOn = (accessToken: string) => {
-    setAccessToken(accessToken);
+  const authOn = (userInfos: User) => {
     setAuthenticated(true);
-    // saveCookie({ [keys.accounts]: accessToken });
+    sessionStorage.setItem(
+      "moneymate.erp.user",
+      JSON.stringify({
+        name: userInfos.name,
+        acessToken: userInfos.bearerToken,
+        cod_pessoa: userInfos.bearerToken,
+        emaiL: userInfos.email,
+      })
+    );
+    setUser(userInfos);
   };
 
-  const redirect = () => {
-    if (configs.redirectToKey) {
-      const redirectTo = loadCache<string>(configs.redirectToKey);
-      setTimeout(() => {
-        if (router) {
-          router.push(redirectTo || configs.afterLoginPath);
-        } else {
-          window.location.assign(redirectTo || configs.afterLoginPath);
-        }
-      }, 200);
-      removeCache(configs.redirectToKey);
-    } else {
-      setTimeout(() => {
-        if (router) {
-          router.push(configs.afterLoginPath);
-        } else {
-          window.location.assign(configs.afterLoginPath);
-        }
-      }, 200);
-    }
-  };
+  const authOff = () => {};
 
-  const value = {
+  const logout = () => {};
+
+  // const redirect = () => {
+  //   if (configs.redirectToKey) {
+  //     const redirectTo = loadCache<string>(configs.redirectToKey);
+  //     setTimeout(() => {
+  //       if (router) {
+  //         router.push(redirectTo || configs.afterLoginPath);
+  //       } else {
+  //         window.location.assign(redirectTo || configs.afterLoginPath);
+  //       }
+  //     }, 200);
+  //     removeCache(configs.redirectToKey);
+  //   } else {
+  //     setTimeout(() => {
+  //       if (router) {
+  //         router.push(configs.afterLoginPath);
+  //       } else {
+  //         window.location.assign(configs.afterLoginPath);
+  //       }
+  //     }, 200);
+  //   }
+  // };
+
+  const value: IAuthContext = {
+    user,
     authenticated,
-    accessToken,
     authOn,
-    redirect,
+    authOff,
+    logout,
   };
+
+  React.useEffect(() => {
+    // Recuperar o estado do usuário do sessionStorage quando o componente for montado
+    const storedUser = sessionStorage.getItem("moneymate.erp.user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setAuthenticated(true);
+    }
+  }, []);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

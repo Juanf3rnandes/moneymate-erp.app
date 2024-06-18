@@ -10,7 +10,8 @@ import NewTransacaoModal from "@/components/new-action/new-action-modal/new-tran
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import PublicLayout from "@/layouts/public";
-import { AuthConfig, AuthProvider } from "@/auth";
+import { AuthProvider } from "@/auth";
+import { authConfig } from "@/auth";
 
 dotenv.config();
 
@@ -37,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <AuthProvider configs={AuthConfig}>
+      <AuthProvider configs={authConfig}>
         {router.pathname !== "/login" ? (
           <DefaultLayout userName="teste juan" />
         ) : (
@@ -83,6 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
         )}
         {NewTransacaoModal && (
           <NewTransacaoModal
+            onSave={() => alert("")}
             opened={newTransacaoOpened}
             form={addTransacaoForm}
             handleModal={handleTransacaoModal}
