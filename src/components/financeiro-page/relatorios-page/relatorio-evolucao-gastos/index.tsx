@@ -35,7 +35,7 @@ export default function RelatorioEvolucaoGastos({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Box width="800px" height="400px">
+        <Box width="100%" height="200px">
             <ComboChart
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               data={data}

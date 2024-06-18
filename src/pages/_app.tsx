@@ -30,8 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
     addNewReceitaForm,
     addnewDespesaForm,
     addDespesaCartaoForm,
+    postTransacao,
     addTransacaoForm,
     postNewReceita,
+    handlePostNewTransacao
   } = useNewActionController();
 
   const router = useRouter();
@@ -40,20 +42,18 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <AuthProvider configs={authConfig}>
         {router.pathname !== "/login" ? (
+       <>
           <DefaultLayout userName="teste juan" />
-        ) : (
-          <PublicLayout />
-        )}
-
-        <Component {...pageProps} />
-
-        <NewActionFloatButton
+          <NewActionFloatButton
           handleOpenNewReceita={handleOpenModal}
           handleOpenNewDespesa={handleDespesaModal}
           handleOpenNewDespesaCartao={handleDespesaCartaoModal}
           handleOpenNewTransacao={handleTransacaoModal}
-        />
-
+        /></>
+        ) : (
+          <PublicLayout />
+        )}
+        <Component {...pageProps} />    
         {newReceitaModalmodalOpened && (
           <NewReceitaModal
             postNewReceita={postNewReceita}
@@ -84,10 +84,11 @@ export default function App({ Component, pageProps }: AppProps) {
         )}
         {NewTransacaoModal && (
           <NewTransacaoModal
-            onSave={() => alert("")}
+            onSave={handlePostNewTransacao}
             opened={newTransacaoOpened}
             form={addTransacaoForm}
             handleModal={handleTransacaoModal}
+            postNewTransacaoAction={postTransacao}
             style={modalStyle}
           />
         )}

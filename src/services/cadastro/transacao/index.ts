@@ -15,6 +15,10 @@ export class TransacaoService {
     );
   }
 
+  async postTransacao(params:postTransacaoRequest){
+    return axios.post<postTransacaoResponse>(`${backendConfig.cadastro}/transacao`,params)
+  }
+
   async deleteTransacao(params: deleteTransacaoRequest) {
     return axios.delete(
       `${backendConfig.cadastro}/transacoes/${params.idTransacao}`

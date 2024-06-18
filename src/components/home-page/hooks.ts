@@ -25,7 +25,7 @@ export default function useHomePageController() {
 
   const services = useService((h) => ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    login: new TransacaoService(h),
+    login: new TransacaoService(),
   }));
 
   const getTransacoesAction = useAct(

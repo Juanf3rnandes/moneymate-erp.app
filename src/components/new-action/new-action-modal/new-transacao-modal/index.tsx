@@ -16,7 +16,7 @@ import { Action, Form } from "@/providers";
 interface NewTransacaoModalProps {
   opened: boolean;
   form: Form<postTransacaoRequest>;
-  postNewTransacao: Action<postTransacaoRequest>;
+  postNewTransacaoAction: Action;
   handleModal: () => void;
   onSave: () => void;
   style: Object;
@@ -25,7 +25,7 @@ interface NewTransacaoModalProps {
 export default function NewTransacaoModal({
   opened,
   form,
-  postNewTransacao,
+  postNewTransacaoAction,
   handleModal,
   onSave,
   style,
@@ -35,19 +35,28 @@ export default function NewTransacaoModal({
       <Grid>
         <Box sx={style}>
           <FormControl>
+            
             <Typography variant="h6">Nova Transacao</Typography>
             <Stack width="400px" gap={3}>
-              <TextField placeholder="R$ 0,00" variant="standard" />
-              <TextField placeholder="Descrição" variant="standard" />
-              <TextField placeholder="Descrição" variant="standard" />
-              <TextField variant="standard" />
-              <TextField type="date" variant="standard" />
+              <TextField placeholder="R$ 0,00" variant="standard"  label= 'valor' 
+              value = {form.value.valor}
+              onChange={ (e) => form.set('valor')(e.target.value)}
+              />
+              <TextField placeholder="Descrição" variant="standard" 
+              label= 'Descrição' value ={form.value.nomeTransacao}
+              onChange={(e) => form.set('nomeTransacao')(e.target.value)}
+              />
+              <TextField variant="standard"  label ='Conta' placeholder="conta"
+              value = {form.value.conta}
+              onChange={(e) => form.set('conta')(e.target.value)}
+              />
+              <TextField type="date" variant="standard" placeholder="data" label= 'data'  />
               <Stack justifyContent="space-between" direction="row"></Stack>
             </Stack>
           </FormControl>
           <Stack direction="row">
             <Button onClick={handleModal}>Cancelar</Button>
-            <Button onClick={onSave}>Salvar</Button>
+            <Button onClick={onSave} >Salvar</Button>
           </Stack>
         </Box>
       </Grid>

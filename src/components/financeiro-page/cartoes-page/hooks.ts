@@ -25,8 +25,8 @@ export default function useFinanceiroController() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const services = useService((h) => ({
-    cartao: new CartaoService(h),
-    transacao: new TransacaoService(h),
+    cartao: new CartaoService(),
+    transacao: new TransacaoService(),
   }));
 
   const [postCartaoModalIsOpen, setPostCartaoModalIsOpen] =

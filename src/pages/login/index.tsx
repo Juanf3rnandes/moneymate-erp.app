@@ -18,7 +18,7 @@ export default function LoginPage() {
     <>
       <title>Moneymate | Login</title>
       <Grid container justifyContent="center" alignItems="center">
-        <Box p={5}>
+        <Box p={5} width='auto' height='auto'>
           <Grid>
             <Card variant="outlined">
               <CardContent>

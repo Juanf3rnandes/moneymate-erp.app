@@ -14,7 +14,7 @@ export default function RelatorioGastosCartao({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Box width="800px" height="400px">
+        <Box width="100%" height="200px">
             <LineChart data={data} options={graphConfig} />
           </Box>
         </Grid>

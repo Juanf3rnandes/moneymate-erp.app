@@ -14,7 +14,7 @@ export default function RelatorioCategoriaDespesa({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Box width="800px" height="400px">
+          <Box width="100%" height="200px">
             <DoughnutChart data={data} options={graphConfig} />
           </Box>
         </Grid>

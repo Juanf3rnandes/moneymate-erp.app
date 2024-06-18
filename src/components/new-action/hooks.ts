@@ -6,6 +6,7 @@ import { useAct, useService } from "@/providers";
 import ReceitasService from "@/services/cadastro/receitas";
 import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
 import { postTransacaoRequest } from "@/services/cadastro/transacao/types";
+import { TransacaoService } from "@/services/cadastro/transacao";
 
 export default function useNewActionController() {
   const [newReceitaModalmodalOpened, setModalOpened] = React.useState(false);
@@ -19,6 +20,8 @@ export default function useNewActionController() {
 
   const newActionService = useService((h) => ({
     receitas: new ReceitasService(h),
+    transacao: new TransacaoService()
+   
   }));
 
   const addNewReceitaForm = useForm<postNewReceitaRequest>({
@@ -48,10 +51,12 @@ export default function useNewActionController() {
   const addTransacaoForm = useForm<postTransacaoRequest>({
     cod_pessoa: 0,
     conta: "",
-    descricao: "",
+    nomeTransacao:"",
     tipo: 1,
     valor: 0,
     data: new Date(),
+    cod_cartao:null,
+    despesaFixa:false
   });
 
   const postNewReceita = useAct(() =>
@@ -60,13 +65,31 @@ export default function useNewActionController() {
       descricao: addNewReceitaForm.value.descricao,
       recebida: addNewReceitaForm.value.recebida,
       valor: addNewReceitaForm.value.valor,
+
     })
   );
+
+  const postTransacao = useAct(() => 
+    newActionService.transacao.postTransacao( {
+      cod_pessoa:addTransacaoForm.value.cod_pessoa,
+      cod_cartao : addTransacaoForm.value.cod_cartao,
+      conta:addTransacaoForm.value.conta,
+      data:addTransacaoForm.value.data,
+      despesaFixa:addTransacaoForm.value.despesaFixa,
+      nomeTransacao:addTransacaoForm.value.nomeTransacao,
+      tipo:addTransacaoForm.value.tipo,
+      valor:addTransacaoForm.value.valor
+    })
+  )
 
   const handlePostNewReceita = () => {
     console.log("teste");
     postNewReceita();
   };
+
+  const handlePostNewTransacao = () => {
+    postTransacao();
+  }
 
   const handleOpenModal = () => {
     setModalOpened(!newReceitaModalmodalOpened);
@@ -108,9 +131,11 @@ export default function useNewActionController() {
     newTransacaoOpened,
     handleOpenModal,
     handlePostNewReceita,
+    handlePostNewTransacao,
     handleDespesaCartaoModal,
     handleDespesaModal,
     handleTransacaoModal,
     postNewReceita,
+    postTransacao
   };
 }
