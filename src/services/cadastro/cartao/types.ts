@@ -7,9 +7,21 @@ export interface getCartaoResponse {
   bandeira: string;
   tipo: string;
   limite: number;
+  descricao: string;
 }
 
 export interface postCartaoRequest {
+  descricao: string;
+  limite: number;
+  dia_fechamento: number;
+  dia_vencimento: number;
+  bandeira: string;
+  tipo: string;
+  cod_pessoa: number;
+}
+
+export interface putCartaoRequest {
+  cod_cartao: number;
   descricao: string;
   limite: number;
   dia_fechamento: number;

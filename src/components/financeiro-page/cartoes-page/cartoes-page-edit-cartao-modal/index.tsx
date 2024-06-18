@@ -1,9 +1,23 @@
-import { Action } from "@/providers";
-import { deleteCartaoRequest } from "@/services/cadastro/cartao/types";
-import { Box, Button, Grid, Modal, Alert } from "@mui/material";
+import { Action, Form } from "@/providers";
+import {
+  deleteCartaoRequest,
+  getCartaoResponse,
+} from "@/services/cadastro/cartao/types";
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Alert,
+  FormControl,
+  Typography,
+  TextField,
+  Stack,
+} from "@mui/material";
 import { modalStyle } from "@/config";
 
 interface CartaoEditModalProps {
+  formCartao: Form<getCartaoResponse>;
   open: boolean;
   onClose: () => void;
   onEdit: () => void;
@@ -11,6 +25,7 @@ interface CartaoEditModalProps {
 }
 
 export default function CartaoEditModal({
+  formCartao,
   open,
   onClose,
   onEdit,
@@ -25,12 +40,22 @@ export default function CartaoEditModal({
               {editAction.error}
             </Alert>
           )}
-          <Grid container xs={12} md={5}>
-            <Grid item>Deseja realmente deletar este cartão?</Grid>
-            <Grid item>
-              <Button onClick={onClose}>Cancelar</Button>
-              <Button onClick={onEdit}>Deletarr</Button>
-            </Grid>
+          <FormControl>
+            <Typography variant="h6">{formCartao.value.descricao}</Typography>
+            <Stack width="auto" gap={3}>
+              <TextField placeholder="R$ 0,00" variant="standard" />
+              <TextField placeholder="Descrição" variant="standard" />
+              <TextField placeholder="Descrição" variant="standard" />
+              <TextField variant="standard" />
+              <TextField type="date" variant="standard" />
+              <Stack justifyContent="space-between" direction="row">
+                <Stack direction="row" gap={1}></Stack>
+              </Stack>
+            </Stack>
+          </FormControl>
+          <Grid item>
+            <Button onClick={onClose}>Cancelar</Button>
+            <Button onClick={onEdit}>Editar</Button>
           </Grid>
         </Box>
       </Modal>

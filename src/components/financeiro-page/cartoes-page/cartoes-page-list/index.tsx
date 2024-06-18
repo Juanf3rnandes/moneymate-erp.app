@@ -68,7 +68,7 @@ export default function CartoesList({
         <Typography variant="h6">Não há cartões disponíveis</Typography>
       ) : (
         cartoes.map((cartao) => (
-          <Grid item xs={12} key={cartao.id}>
+          <Grid container width="auto" item key={cartao.id}>
             <Card sx={{ borderRadius: 5 }}>
               <Grid
                 container

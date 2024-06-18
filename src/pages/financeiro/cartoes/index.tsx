@@ -8,6 +8,7 @@ import CartaoDeleteModal from "@/components/financeiro-page/cartoes-page/cartoes
 import CartaoEditModal from "@/components/financeiro-page/cartoes-page/cartoes-page-edit-cartao-modal";
 import CartoesOptionsField from "@/components/financeiro-page/cartoes-page/cartoes-page-options-field";
 import NewCartaoModal from "@/components/financeiro-page/cartoes-page/cartoes-page-new-cartao-modal";
+import CartaoComprasTable from "@/components/financeiro-page/cartoes-page/cartoes-page-compras-table";
 
 export default function Cartoes() {
   const {
@@ -21,15 +22,18 @@ export default function Cartoes() {
     handleSetOnRef,
     handleRefOnClose,
     selectedCard,
+    putCartaoAction,
     postCartaoModalIsOpen,
     deleteCartaoModalIsOpen,
     editCartaoModalIsOpen,
     handleOpenPostCartaoModal,
     handleDeleteCartaoModal,
     handlePostCartao,
+    handlePutCartao,
     handleDeleteCartao,
     handleEditCartaoModal,
     postCartaoAction,
+
     deleteCartaoAction,
   } = useFinanceiroController();
 
@@ -49,10 +53,11 @@ export default function Cartoes() {
             <Typography color="text.primary">Cartões</Typography>
           </Breadcrumbs>
 
-          <Grid container justifyContent="center" alignItems="center" xs={12}>
+          <Grid container justifyContent="center" alignItems="center">
             <CartoesOptionsField
               openToCreateCartaoModal={handleOpenPostCartaoModal}
             />
+
             <Grid item>
               <CartoesList
                 anchorEl={anchorEl}
@@ -74,11 +79,13 @@ export default function Cartoes() {
             configModal={modalStyle}
           />
         </Grid>
+        <Grid item xs={8} md={4}>
+          <CartaoComprasTable compras={[]} />
+        </Grid>
         {deleteCartaoModalIsOpen && (
           <CartaoDeleteModal
             open={deleteCartaoModalIsOpen}
             onClose={handleDeleteCartaoModal}
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             deleteAction={deleteCartaoAction}
             configModal={modalStyle}
             onDelete={handleDeleteCartao}
@@ -86,10 +93,11 @@ export default function Cartoes() {
         )}
 
         {editCartaoModalIsOpen && (
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           <CartaoEditModal
             open={editCartaoModalIsOpen}
             onClose={handleEditCartaoModal}
+            onEdit={handlePutCartao}
+            editAction={putCartaoAction}
           />
         )}
 

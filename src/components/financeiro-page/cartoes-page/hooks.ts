@@ -2,6 +2,7 @@ import React from "react";
 import {
   getCartaoResponse,
   postCartaoRequest,
+  putCartaoRequest,
 } from "@/services/cadastro/cartao/types";
 import { useAct, useForm, useService } from "@/providers";
 import {
@@ -25,8 +26,8 @@ export default function useFinanceiroController() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const services = useService((h) => ({
-    cartao: new CartaoService(),
-    transacao: new TransacaoService(),
+    cartao: new CartaoService(h),
+    transacao: new TransacaoService(h),
   }));
 
   const [postCartaoModalIsOpen, setPostCartaoModalIsOpen] =
@@ -72,6 +73,27 @@ export default function useFinanceiroController() {
       !!f.dia_vencimento
   );
 
+  const formEditCartao = useForm<putCartaoRequest>(
+    {
+      cod_cartao: 0,
+      bandeira: "",
+      cod_pessoa: 0,
+      descricao: "",
+      dia_fechamento: 0,
+      dia_vencimento: 0,
+      limite: 0,
+      tipo: "",
+    },
+    (f) =>
+      !!f.cod_pessoa &&
+      !!f.descricao &&
+      !!f.bandeira &&
+      !!f.tipo &&
+      !!f.limite &&
+      !!f.dia_fechamento &&
+      !!f.dia_vencimento
+  );
+
   const getCartaoAction = useAct(
     () => services.cartao.getCartao({ cod_pessoa: 44365 }),
     {
@@ -96,6 +118,27 @@ export default function useFinanceiroController() {
       onSuccess() {
         formCreateCartao.reset();
         handleOpenPostCartaoModal();
+        handleGetCartoes();
+      },
+    }
+  );
+
+  const putCartaoAction = useAct(
+    () =>
+      services.cartao.putCartao({
+        cod_cartao: formEditCartao.value.cod_cartao,
+        bandeira: formEditCartao.value.bandeira,
+        cod_pessoa: formEditCartao.value.cod_pessoa,
+        descricao: formEditCartao.value.descricao,
+        dia_fechamento: formEditCartao.value.dia_fechamento,
+        dia_vencimento: formEditCartao.value.dia_vencimento,
+        limite: formEditCartao.value.limite,
+        tipo: "credito",
+      }),
+    {
+      onSuccess() {
+        formEditCartao.reset();
+        handleEditCartaoModal;
         handleGetCartoes();
       },
     }
@@ -157,6 +200,10 @@ export default function useFinanceiroController() {
     postCartaoAction();
   };
 
+  const handlePutCartao = () => {
+    putCartaoAction();
+  };
+
   const handleDeleteCartao = () => {
     deleteCartaoAction();
   };
@@ -185,6 +232,7 @@ export default function useFinanceiroController() {
     deleteCartaoModalIsOpen,
     editCartaoModalIsOpen,
     getCartaoAction,
+    putCartaoAction,
     formCreateDespesaCartao,
     formCreateCartao,
     modalNewDespesaIsOpen,
@@ -200,6 +248,7 @@ export default function useFinanceiroController() {
     handleDeleteCartaoModal,
     handleEditCartaoModal,
     handlePostCartao,
+    handlePutCartao,
     handleDeleteCartao,
     postCartaoAction,
     deleteCartaoAction,

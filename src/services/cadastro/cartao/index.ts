@@ -3,8 +3,8 @@ import {
   deleteCartaoRequest,
   deleteCartaoResponse,
   getCartaoRequest,
-  getCartaoResponse,
   postCartaoRequest,
+  putCartaoRequest,
 } from "./types";
 import { backendConfig } from "@/config";
 
@@ -17,6 +17,13 @@ export class CartaoService {
 
   async postCartao(params: postCartaoRequest) {
     return axios.post(`${backendConfig.cadastro}/cartao`, params);
+  }
+
+  async putCartao(params: putCartaoRequest) {
+    return axios.put(
+      `${backendConfig.cadastro}/cartao/${params.cod_cartao}`,
+      params
+    );
   }
 
   async deleteCartao(params: deleteCartaoRequest) {

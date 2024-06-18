@@ -30,8 +30,8 @@ export default function useExtratoController() {
     (f) => !!f.tipo && !!f.palavraChave
   );
 
-  const services = useService((h) => ({
-    transacoes: new TransacaoService(h),
+  const services = useService(() => ({
+    transacoes: new TransacaoService(),
   }));
 
   const getTransacoesAction = useAct(

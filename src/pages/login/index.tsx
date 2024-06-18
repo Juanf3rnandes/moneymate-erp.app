@@ -18,9 +18,9 @@ export default function LoginPage() {
     <>
       <title>Moneymate | Login</title>
       <Grid container justifyContent="center" alignItems="center">
-        <Box p={4} width='auto' height='auto'>
+        <Box p={4} width="auto" height="auto">
           <Grid>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{ borderRadius: "2%" }}>
               <CardContent>
                 <Box p={2}>
                   <Grid

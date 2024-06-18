@@ -2,7 +2,6 @@ import ExtratoActionsButton from "@/components/financeiro-page/extrato-page/extr
 import ExtratoDeleteTransacaoModal from "@/components/financeiro-page/extrato-page/extrato-delete-transacao-modal";
 import ExtratoTransacoesList from "@/components/financeiro-page/extrato-page/extrato-transacoes-list";
 import useExtratoController from "@/components/financeiro-page/extrato-page/hooks";
-import useNewActionController from "@/components/new-action/hooks";
 import { Breadcrumbs, Grid, Link, Typography } from "@mui/material";
 
 export default function Extrato() {
