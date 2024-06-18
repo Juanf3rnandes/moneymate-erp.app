@@ -1,16 +1,23 @@
+import {
+  postLoginRequest,
+  loginResponse,
+  postRegisterRequest,
+  postRegisterResponse,
+} from "./types";
 import axios from "axios";
-import { postLoginRequest, loginResponse } from "./types";
-import { baseURLApiCadastro } from "@/config/apiConfig";
-import { Http } from "@/providers/http/utils";
+import { backendConfig } from "@/config";
+
 export class LoginService {
-  private readonly baseUrl = baseURLApiCadastro;
-  constructor(private http: Http) {}
+  constructor() {}
 
   async postLogin(params: postLoginRequest) {
-    return this.http.post<loginResponse>(`WS/login`, {
-      baseURL:'',
+    return axios.post(`${backendConfig.accounts}/login`, params);
+  }
+
+  async postRegister(params: postRegisterRequest) {
+    return axios.post<postRegisterResponse>(
+      `${backendConfig.accounts}/registro`,
       params
-    });
-    
+    );
   }
 }

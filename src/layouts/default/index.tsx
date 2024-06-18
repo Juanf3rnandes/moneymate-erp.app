@@ -1,8 +1,11 @@
 import styles from "../styles/layoutDefault.module.scss";
 import { FaRegBell } from "react-icons/fa";
 import Avatar from "@mui/material/Avatar";
-import { Stack, Typography } from "@mui/material";
-
+import { Stack, Typography, Badge } from "@mui/material";
+import logoImage from "../../../public/assets/imgs/Logo_do_MoneyMate.png";
+import Image from "next/image";
+import Link from "next/link";
+import { User } from "@/auth";
 interface DefaultLayoutProps {
   userName: string;
   left?: React.ReactNode;
@@ -37,41 +40,52 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
 
   return (
     <>
-      <header className={styles.header_container}>
-        <nav className={styles.nav_menu}>
-          <div className={styles.items_container}>
-            <h1>MoneyMate</h1>
-          </div>
-          <div className={styles.menu_container}></div>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            gap="20px"
-          >
-            <FaRegBell size={20} />
+      <div className={styles.container}>
+        <header className={styles.header_container}>
+          <nav className={styles.nav_menu}>
+            <div className={styles.items_container}>
+              <Link href="/">
+                <Image
+                  src={logoImage}
+                  alt="logo money mate"
+                  height={50}
+                  width={150}
+                />
+              </Link>
+            </div>
+            <div className={styles.menu_container}></div>
             <Stack
               direction="row"
-              justifyContent="center"
+              justifyContent="space-between"
               alignItems="center"
-              gap={1}
+              gap="20px"
             >
-              <Avatar
-                src=""
-                {...stringAvatar(userName)}
-                sx={{
-                  height: 30,
-                  width: 30,
-                }}
-              />
-              <Typography variant="body1">{userName}</Typography>
+              <Badge badgeContent={2} color="primary">
+                <FaRegBell size={20} />
+              </Badge>
+              <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                gap={1}
+              >
+                <Avatar
+                  src=""
+                  {...stringAvatar(userName)}
+                  sx={{
+                    height: 30,
+                    width: 30,
+                  }}
+                />
+                <Typography variant="body1">{userName}</Typography>
+              </Stack>
             </Stack>
-          </Stack>
-        </nav>
-      </header>
-      {left && <div className={styles.left_container}>{left}</div>}
-      <div className={styles.content_container}>
-        {/* O conteúdo principal vai aqui */}
+          </nav>
+        </header>
+        {left && <div className={styles.left_container}>{left}</div>}
+        <div className={styles.content_container}>
+          {/* Main content goes here */}
+        </div>
       </div>
     </>
   );

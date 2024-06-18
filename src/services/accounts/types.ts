@@ -1,22 +1,22 @@
 export interface postLoginRequest {
-  email: string;
-  password: string;
+  login: string;
+  senha: string;
 }
 
 export interface loginResponse {
-  nome: string;
+  name: string;
   email: string;
   bearerToken: string;
-  fotoUrl: string;
+  cod_pessoa: number;
 }
 
 export interface postRegisterRequest {
   nome: string;
   emaiL: string;
   senha: string;
-  cpf?: string;
+  cpf_cnpj?: string | null;
 }
 
-export interface registerResponse {
+export interface postRegisterResponse {
   resultMessage: string;
 }

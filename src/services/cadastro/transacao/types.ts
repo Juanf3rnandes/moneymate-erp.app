@@ -1,3 +1,4 @@
+import { ISODate } from "@/providers/utils/types";
 import { UUID } from "crypto";
 
 export enum TipoTransacao {
@@ -5,13 +6,25 @@ export enum TipoTransacao {
   despesa = 2,
 }
 
+export enum CategoriaTransacao {
+  educacao = 1,
+  investimentos = 2,
+  lazer = 3,
+}
+
 export interface postTransacaoRequest {
   valor: number;
-  descricao: string;
+  nomeTransacao: string;
   conta: string;
   cod_pessoa: number;
   tipo: TipoTransacao;
   data: Date;
+  cod_cartao: number | null;
+  despesaFixa: boolean;
+}
+
+export interface postTransacaoResponse {
+  message: string;
 }
 
 export interface getTransacaoRequest {
@@ -20,10 +33,15 @@ export interface getTransacaoRequest {
 
 export interface getTransacaoResponse {
   id: UUID;
-  descricao: string;
+  nomeTransacao: string;
   tipoTransacao: TipoTransacao;
   valor: number;
-  data: Date;
+  data: ISODate;
   cod_cartao: number | null;
   idConta: UUID;
+  categoria: CategoriaTransacao;
+}
+
+export interface deleteTransacaoRequest {
+  idTransacao: string;
 }

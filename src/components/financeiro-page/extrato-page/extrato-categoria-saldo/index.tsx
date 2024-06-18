@@ -11,6 +11,7 @@ export default function ExtratoCategoriaSaldo({
   valorDespesas,
   valorReceitas,
 }: ExtratoCategoriaSaldoProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const saldoStyled = {
     borderRadius: "40%",
     minHeight: 100,

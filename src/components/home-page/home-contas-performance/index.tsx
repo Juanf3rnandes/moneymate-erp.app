@@ -16,7 +16,9 @@ export default function HomeContasPerformance() {
               Acompanhe a evolução das Despesas, Receitas, Contas de Consumo e
               Investimentos
             </Typography>
-            <Link>Clique para acessar os gráficos</Link>
+            <Link href="/financeiro/relatorios">
+              Clique para acessar os gráficos
+            </Link>
           </Stack>
         </Grid>
       </Card>

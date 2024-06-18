@@ -1,5 +1,5 @@
 // pages/RelatorioReceitaDespesa.js
-import { Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid } from "@mui/material";
 import LineChart from "../line-chart";
 
 interface RelatorioReceitaDespesaProps {
@@ -7,6 +7,7 @@ interface RelatorioReceitaDespesaProps {
 }
 
 export default function RelatorioReceitaDespesa({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   graphConfig,
 }: RelatorioReceitaDespesaProps) {
   const data = {
@@ -37,7 +38,7 @@ export default function RelatorioReceitaDespesa({
       },
       title: {
         display: true,
-        text: "Relatório de Receitas e Despesas",
+        text: "Receitas x Despesas",
       },
     },
   };
@@ -46,10 +47,9 @@ export default function RelatorioReceitaDespesa({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Typography variant="h6">Receitas x Despesa</Typography>
-        </Grid>
-        <Grid item>
-          <LineChart data={data} options={options} />
+        <Box width="100%" height="200px">
+            <LineChart data={data} options={options} />
+          </Box>
         </Grid>
       </Grid>
     </Card>

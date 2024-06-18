@@ -15,13 +15,19 @@ import HomeUltimasTransacoes from "@/components/home-page/home-ultimas-transacoe
 import HomeCartaoResumo from "@/components/home-page/home-cartao-resumo";
 import HomeVencimentoDespesaAlert from "@/components/home-page/home-vencimento-despesa-alert";
 import HomeContasPerformance from "@/components/home-page/home-contas-performance";
+import { useAuth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const auth = useAuth();
+  const userName = auth?.user;
+
   const {
     homeGreeting,
+    getTransacoesAction,
     handleHomeGreetings,
+    handleGetTransacoes,
     formattedDate,
     balancoSaldo,
     receitas,
@@ -31,19 +37,32 @@ export default function Home() {
   } = useHomePageController();
 
   return (
-    <Grid>
-      {despesaVencida && <HomeVencimentoDespesaAlert />}
-      <HomeGreetings
-        userName="John Doe"
-        greeting={homeGreeting}
-        dateResumo={formattedDate}
-      />
+    <>
+      <title> Moneymate | Home</title>
+      <Grid m={3}>
+        {despesaVencida && <HomeVencimentoDespesaAlert />}
+        <HomeGreetings
+          userName=""
+          greeting={homeGreeting}
+          dateResumo={formattedDate}
+        />
 
-      <Stack direction="row">
-        <HomeUltimasTransacoes transacoes={transacoes} />
-      </Stack>
-      <HomeContasPerformance />
-      <HomeCartaoResumo cartoes={[]} />
-    </Grid>
+        <Grid
+          display="flex"
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+        >
+          <HomeCartaoResumo cartoes={[]} />
+          <HomeContasPerformance />
+        </Grid>
+        <Grid container>
+          <HomeUltimasTransacoes
+            transacoes={transacoes}
+            actionTransacoes={getTransacoesAction}
+          />
+        </Grid>
+      </Grid>
+    </>
   );
 }

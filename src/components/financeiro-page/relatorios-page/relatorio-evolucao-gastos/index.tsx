@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid } from "@mui/material";
 import ComboChart from "../combo-chart";
 
 interface RelatorioEvolucaoGastosProps {
@@ -35,8 +35,12 @@ export default function RelatorioEvolucaoGastos({
     <Card>
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item>
-          <Box width="800px" height="400px">
-            <ComboChart data={data} options={graphConfig} />
+        <Box width="100%" height="200px">
+            <ComboChart
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              data={data}
+              options={graphConfig}
+            />
           </Box>
         </Grid>
       </Grid>

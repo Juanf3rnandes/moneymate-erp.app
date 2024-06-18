@@ -1,13 +1,15 @@
 import React from "react";
 import { Http } from "./utils";
+import { HttpConfig } from "./types";
 
 const HttpContext = React.createContext<Http>(null as never);
+
 export const useHttp = () => React.useContext(HttpContext);
 
-// interface HttpProviderProps {
-//   configs?: HttpConfig;
-//   children?: React.ReactNode;
-// }
+interface HttpProviderProps {
+  configs?: HttpConfig;
+  children?: React.ReactNode;
+}
 
 export function useService<T>(factory: (http: Http) => T) {
   const http = useHttp();

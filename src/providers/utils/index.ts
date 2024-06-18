@@ -3,3 +3,4 @@ export * from "./string";
 export * from "./brazil";
 export * from "./browser";
 export * from "./number";
+export * from "./cookie";

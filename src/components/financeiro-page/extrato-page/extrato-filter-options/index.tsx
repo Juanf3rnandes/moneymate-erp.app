@@ -1,3 +1,5 @@
+import { Form } from "@/providers";
+import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import {
   FormControl,
   Grid,
@@ -8,7 +10,13 @@ import {
   TextField,
 } from "@mui/material";
 
-export default function ExtratoFilterOptions() {
+interface ExtratoFilterOptions {
+  formFilter: Form<getTransacaoResponse>;
+}
+
+export default function ExtratoFilterOptions({
+  formFilter,
+}: ExtratoFilterOptions) {
   return (
     <Grid>
       <FormControl>
@@ -17,6 +25,8 @@ export default function ExtratoFilterOptions() {
             variant="outlined"
             placeholder="Pesquisar"
             label="Palavra-chave"
+            value={formFilter.value.nomeTransacao}
+            onChange={(e) => formFilter.set("nomeTransacao")(e.target.value)}
           />
           <FormControl>
             <Stack width={100}>
