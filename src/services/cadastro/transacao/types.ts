@@ -6,6 +6,12 @@ export enum TipoTransacao {
   despesa = 2,
 }
 
+export enum CategoriaTransacao {
+  educacao = 1,
+  investimentos = 2,
+  lazer = 3,
+}
+
 export interface postTransacaoRequest {
   valor: number;
   nomeTransacao: string;
@@ -33,4 +39,9 @@ export interface getTransacaoResponse {
   data: ISODate;
   cod_cartao: number | null;
   idConta: UUID;
+  categoria: CategoriaTransacao;
+}
+
+export interface deleteTransacaoRequest {
+  idTransacao: string;
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { backendConfig } from "@/config";
 import {
+  deleteTransacaoRequest,
   getTransacaoRequest,
   postTransacaoRequest,
   postTransacaoResponse,
@@ -11,6 +12,12 @@ export class TransacaoService {
   async getTransacao(params: getTransacaoRequest) {
     return axios.get(
       `${backendConfig.cadastro}/transacoes/${params.cod_pessoa}`
+    );
+  }
+
+  async deleteTransacao(params: deleteTransacaoRequest) {
+    return axios.delete(
+      `${backendConfig.cadastro}/transacoes/${params.idTransacao}`
     );
   }
 }

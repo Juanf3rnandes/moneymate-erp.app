@@ -1,4 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const baseURLApiCadastro = process.env.API_NEXT_CADASTRO_URL;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const baseURlApiAccounts = process.env.API_NEXT_ACCOUNTS_URL;
 
 export const backendConfig = {

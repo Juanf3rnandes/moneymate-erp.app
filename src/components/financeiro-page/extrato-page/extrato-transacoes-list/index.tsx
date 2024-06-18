@@ -1,5 +1,14 @@
-import { getTransacoesResponse } from "@/services/cadastro/types";
-import { Button, Card, Grid, Stack, Typography } from "@mui/material";
+import React from "react";
+import {
+  Card,
+  Grid,
+  Stack,
+  Typography,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,14 +19,32 @@ import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import emptyImage from "../../../../../public/assets/imgs/transacoes-empty.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
+import { parseISO } from "date-fns";
 
 interface ExtratoTransacoesListProps {
-  transacoes: getTransacoesResponse[];
+  transacoes: getTransacaoResponse[];
+  achorEl: null | HTMLElement;
+  selectedTransacao: null | string;
+  handleRefOnClose: () => void;
+  handleSetOnRef: (
+    event: React.MouseEvent<HTMLElement>,
+    transacaoID: string
+  ) => void;
+  handleDeleteTransacaoModal: () => void;
+  handleEditTransacaoModal: () => void;
 }
 
 export default function ExtratoTransacoesList({
   transacoes,
+  achorEl,
+  selectedTransacao,
+  handleRefOnClose,
+  handleSetOnRef,
+  handleDeleteTransacaoModal,
+  handleEditTransacaoModal,
 }: ExtratoTransacoesListProps) {
+  const open = Boolean(achorEl);
   return (
     <Card>
       <Grid container>
@@ -48,20 +75,45 @@ export default function ExtratoTransacoesList({
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell align="center">
-                      {transacao.data.toLocaleDateString()}
+                      {parseISO(transacao.data).toLocaleString()}
                     </TableCell>
                     <TableCell align="center">
-                      {transacao.tituloTransacao}
+                      {transacao.nomeTransacao}
                     </TableCell>
-                    <TableCell align="center">{transacao.tipo}</TableCell>
-                    <TableCell align="center">{transacao.tipo}</TableCell>
+                    <TableCell align="center">
+                      {transacao.tipoTransacao == 1 ? "Receita" : "Despesa"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {transacao.nomeTransacao}
+                    </TableCell>
                     <TableCell align="center">
                       {`R$ ${transacao.valor.toFixed(2)}`}
                     </TableCell>
                     <TableCell align="center">
-                      <Button>
-                        <MoreHorizIcon />
-                      </Button>
+                      <Grid item m={1}>
+                        <IconButton
+                          aria-controls="long-menu"
+                          aria-haspopup="true"
+                          onClick={(event) =>
+                            handleSetOnRef(event, transacao.id)
+                          }
+                        >
+                          <MoreHorizIcon />
+                        </IconButton>
+                      </Grid>
+                      <Menu
+                        id="transacoes-page-table-action"
+                        anchorEl={achorEl}
+                        open={open && selectedTransacao === transacao.id}
+                        onClose={handleRefOnClose}
+                      >
+                        <MenuItem onClick={handleEditTransacaoModal}>
+                          Editar
+                        </MenuItem>
+                        <MenuItem onClick={handleDeleteTransacaoModal}>
+                          Excluir
+                        </MenuItem>
+                      </Menu>
                     </TableCell>
                   </TableRow>
                 ))

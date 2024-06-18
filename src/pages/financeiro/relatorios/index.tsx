@@ -9,7 +9,7 @@ export default function Relatorios() {
   const {
     graphConfigEvolucaoGraficos,
     graphConfigRelatorioCategoriaDespesa,
-    configGraphGastosCartao,
+    // configGraphGastosCartao,
     categoriaDespesa,
     gastosCartao,
   } = useRelatorioController();

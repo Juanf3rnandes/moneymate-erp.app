@@ -125,7 +125,7 @@ export default function CartoesList({
               <Stack m={2}>
                 <Typography variant="body2">{`R$:${
                   valorFatura ? valorFatura : `0,00`
-                } de R$:${cartao.limite}`}</Typography>
+                } de R$:${cartao.limite.toFixed(2)}`}</Typography>
                 <LinearProgressWithLabel
                   value={valorFatura ? valorFatura : 0}
                   comparisonValue={cartao.limite}

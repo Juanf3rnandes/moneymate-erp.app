@@ -4,6 +4,7 @@ import { Box, Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { parseISO } from "date-fns";
+import Link from "next/link";
 interface HomeUltimasTransacoesProps {
   transacoes: getTransacaoResponse[];
   actionTransacoes: Action;
@@ -23,7 +24,9 @@ export default function HomeUltimasTransacoes({
         m={2}
       >
         <Typography variant="h5">Extrato (últimas movimentações)</Typography>
-        <Button variant="contained">Extrato completo</Button>
+        <Link href="/financeiro/extrato">
+          <Button variant="contained">Extrato completo</Button>
+        </Link>
       </Stack>
       <CardContent>
         {actionTransacoes.loading ? (

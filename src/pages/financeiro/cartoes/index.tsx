@@ -6,11 +6,14 @@ import Link from "@mui/material/Link";
 import AddNewDespesaCartaoModal from "@/components/financeiro-page/cartoes-page/add-new-despesa-cartao-modal";
 import CartaoDeleteModal from "@/components/financeiro-page/cartoes-page/cartoes-page-delete-cartao-modal";
 import CartaoEditModal from "@/components/financeiro-page/cartoes-page/cartoes-page-edit-cartao-modal";
+import CartoesOptionsField from "@/components/financeiro-page/cartoes-page/cartoes-page-options-field";
+import NewCartaoModal from "@/components/financeiro-page/cartoes-page/cartoes-page-new-cartao-modal";
 
 export default function Cartoes() {
   const {
     cartoesList,
     formCreateDespesaCartao,
+    formCreateCartao,
     handleOpenModalNewDespesa,
     modalNewDespesaIsOpen,
     modalStyle,
@@ -18,11 +21,15 @@ export default function Cartoes() {
     handleSetOnRef,
     handleRefOnClose,
     selectedCard,
+    postCartaoModalIsOpen,
     deleteCartaoModalIsOpen,
     editCartaoModalIsOpen,
+    handleOpenPostCartaoModal,
     handleDeleteCartaoModal,
+    handlePostCartao,
     handleDeleteCartao,
     handleEditCartaoModal,
+    postCartaoAction,
     deleteCartaoAction,
   } = useFinanceiroController();
 
@@ -43,6 +50,9 @@ export default function Cartoes() {
           </Breadcrumbs>
 
           <Grid container justifyContent="center" alignItems="center" xs={12}>
+            <CartoesOptionsField
+              openToCreateCartaoModal={handleOpenPostCartaoModal}
+            />
             <Grid item>
               <CartoesList
                 anchorEl={anchorEl}
@@ -68,6 +78,7 @@ export default function Cartoes() {
           <CartaoDeleteModal
             open={deleteCartaoModalIsOpen}
             onClose={handleDeleteCartaoModal}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             deleteAction={deleteCartaoAction}
             configModal={modalStyle}
             onDelete={handleDeleteCartao}
@@ -75,9 +86,20 @@ export default function Cartoes() {
         )}
 
         {editCartaoModalIsOpen && (
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           <CartaoEditModal
             open={editCartaoModalIsOpen}
             onClose={handleEditCartaoModal}
+          />
+        )}
+
+        {postCartaoModalIsOpen && (
+          <NewCartaoModal
+            open={postCartaoModalIsOpen}
+            onSave={handlePostCartao}
+            onClose={handleOpenPostCartaoModal}
+            postCartaoAction={postCartaoAction}
+            form={formCreateCartao}
           />
         )}
       </Box>

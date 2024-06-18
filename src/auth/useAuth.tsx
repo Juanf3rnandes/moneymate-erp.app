@@ -1,14 +1,7 @@
-import React, {
-  ReactNode,
-  useMemo,
-  useEffect,
-  useState,
-  createContext,
-  useContext,
-} from "react";
+import React, { ReactNode, useState, createContext, useContext } from "react";
 import { useRouter } from "next/router";
 import { AuthConfig, IAuthContext, User } from "./types";
-import { camelCaseProps, saveCookie, loadCookies } from "@/providers";
+import { camelCaseProps } from "@/providers";
 import { parseJwt } from "@/providers/utils/crypto";
 import { loadCache, removeCache } from "@/providers/utils/cache";
 
@@ -44,7 +37,8 @@ export function AuthProvider({ configs, children }: AuthProviderProps) {
 
   const authOn = (accessToken: string) => {
     setAccessToken(accessToken);
-    saveCookie({ [keys.accounts]: accessToken });
+    setAuthenticated(true);
+    // saveCookie({ [keys.accounts]: accessToken });
   };
 
   const redirect = () => {

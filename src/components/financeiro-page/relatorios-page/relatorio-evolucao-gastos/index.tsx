@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid } from "@mui/material";
 import ComboChart from "../combo-chart";
 
 interface RelatorioEvolucaoGastosProps {

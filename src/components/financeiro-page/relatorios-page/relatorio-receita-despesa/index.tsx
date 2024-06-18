@@ -1,5 +1,5 @@
 // pages/RelatorioReceitaDespesa.js
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid } from "@mui/material";
 import LineChart from "../line-chart";
 
 interface RelatorioReceitaDespesaProps {
@@ -7,6 +7,7 @@ interface RelatorioReceitaDespesaProps {
 }
 
 export default function RelatorioReceitaDespesa({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   graphConfig,
 }: RelatorioReceitaDespesaProps) {
   const data = {

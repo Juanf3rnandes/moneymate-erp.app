@@ -9,6 +9,16 @@ export interface getCartaoResponse {
   limite: number;
 }
 
+export interface postCartaoRequest {
+  descricao: string;
+  limite: number;
+  dia_fechamento: number;
+  dia_vencimento: number;
+  bandeira: string;
+  tipo: string;
+  cod_pessoa: number;
+}
+
 export interface postDespesaCartaoRequest {
   valor: number;
   descricao: string;
