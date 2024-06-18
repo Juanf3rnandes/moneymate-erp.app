@@ -4,7 +4,11 @@ export enum RelatorioItem {
     porCategoria=3
 }
 
-export interface RelatorioItemGenerate {
+export interface postRelatorioItemGenerateRequest {
+    codigoView:number
+}
+
+export interface postRelatorioItemGenerateResponse {
     codigo:number;
     descricao:string;
 }
