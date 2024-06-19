@@ -1,5 +1,3 @@
-import { ISODate } from "@/providers/utils/types";
-
 export interface User {
   name: string;
   cod_pessoa: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  getCartaoResponse,
+  getCartoesResponse,
   postCartaoRequest,
   putCartaoRequest,
 } from "@/services/cadastro/cartao/types";
@@ -12,12 +12,17 @@ import {
 } from "@/services/cadastro/transacao/types";
 import { CartaoService } from "@/services/cadastro/cartao";
 import { TransacaoService } from "@/services/cadastro/transacao";
+import { useAuth } from "@/auth";
 
 export default function useFinanceiroController() {
+  const { user } = useAuth();
+
   const [modalNewDespesaIsOpen, setModalNewDespesaIsOpen] =
     React.useState<boolean>(false);
 
-  const [cartoesList, setCartoesList] = React.useState<getCartaoResponse[]>([]);
+  const [cartoesList, setCartoesList] = React.useState<getCartoesResponse[]>(
+    []
+  );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>(
     []
@@ -45,10 +50,11 @@ export default function useFinanceiroController() {
       conta: "",
       data: new Date(),
       nomeTransacao: "",
-      tipo: TipoTransacao.despesa,
+      tipo: TipoTransacao.none,
       valor: 0,
       cod_cartao: 0,
       despesaFixa: false,
+      metodo_pagamento: "",
     },
     (f) => !!f.cod_pessoa && !!f.cod_cartao
   );
@@ -95,7 +101,7 @@ export default function useFinanceiroController() {
   );
 
   const getCartaoAction = useAct(
-    () => services.cartao.getCartao({ cod_pessoa: 44365 }),
+    () => services.cartao.getCartao({ cod_pessoa: user?.cod_pessoa as number }),
     {
       onSuccess(response) {
         setCartoesList(response.results.data);
@@ -107,7 +113,7 @@ export default function useFinanceiroController() {
     () =>
       services.cartao.postCartao({
         bandeira: formCreateCartao.value.bandeira,
-        cod_pessoa: 44365,
+        cod_pessoa: user?.cod_pessoa as number,
         descricao: formCreateCartao.value.descricao,
         dia_fechamento: formCreateCartao.value.dia_fechamento,
         dia_vencimento: formCreateCartao.value.dia_vencimento,
@@ -163,11 +169,34 @@ export default function useFinanceiroController() {
     }
   );
 
+  const postDespesaCartaoAction = useAct(
+    () =>
+      services.transacao.postTransacao({
+        cod_pessoa: user?.cod_pessoa as number,
+        tipo: TipoTransacao.despesa,
+        cod_cartao: selectedCard as number,
+        conta: null,
+        data: formCreateDespesaCartao.value.data,
+        despesaFixa: formCreateDespesaCartao.value.despesaFixa,
+        nomeTransacao: formCreateDespesaCartao.value.nomeTransacao,
+        valor: formCreateDespesaCartao.value.valor,
+        metodo_pagamento: "credito",
+      }),
+    {
+      onSuccess() {
+        formCreateDespesaCartao.reset();
+        handleOpenModalNewDespesa();
+        handleGetCartoes();
+      },
+    }
+  );
+
   const handleGetCartoes = () => {
     getCartaoAction();
   };
 
   const handleOpenModalNewDespesa = () => {
+    formCreateDespesaCartao.reset();
     setModalNewDespesaIsOpen(!modalNewDespesaIsOpen);
   };
 
@@ -206,6 +235,10 @@ export default function useFinanceiroController() {
 
   const handleDeleteCartao = () => {
     deleteCartaoAction();
+  };
+
+  const handlePostDespesaCartao = () => {
+    postDespesaCartaoAction();
   };
 
   const modalStyle = {
@@ -250,7 +283,9 @@ export default function useFinanceiroController() {
     handlePostCartao,
     handlePutCartao,
     handleDeleteCartao,
+    handlePostDespesaCartao,
     postCartaoAction,
     deleteCartaoAction,
+    postDespesaCartaoAction,
   };
 }

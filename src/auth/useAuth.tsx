@@ -23,44 +23,19 @@ export function AuthProvider({ configs, children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
   const authOn = (userInfos: User) => {
+    const userData: User = {
+      ...userInfos,
+      cod_pessoa: userInfos.cod_pessoa, // Certifique-se de manter o cod_pessoa
+    };
+
     setAuthenticated(true);
-    sessionStorage.setItem(
-      "moneymate.erp.user",
-      JSON.stringify({
-        name: userInfos.name,
-        acessToken: userInfos.bearerToken,
-        cod_pessoa: userInfos.bearerToken,
-        emaiL: userInfos.email,
-      })
-    );
-    setUser(userInfos);
+    sessionStorage.setItem("moneymate.erp.user", JSON.stringify(userData));
+    setUser(userData);
   };
 
   const authOff = () => {};
 
   const logout = () => {};
-
-  // const redirect = () => {
-  //   if (configs.redirectToKey) {
-  //     const redirectTo = loadCache<string>(configs.redirectToKey);
-  //     setTimeout(() => {
-  //       if (router) {
-  //         router.push(redirectTo || configs.afterLoginPath);
-  //       } else {
-  //         window.location.assign(redirectTo || configs.afterLoginPath);
-  //       }
-  //     }, 200);
-  //     removeCache(configs.redirectToKey);
-  //   } else {
-  //     setTimeout(() => {
-  //       if (router) {
-  //         router.push(configs.afterLoginPath);
-  //       } else {
-  //         window.location.assign(configs.afterLoginPath);
-  //       }
-  //     }, 200);
-  //   }
-  // };
 
   const value: IAuthContext = {
     user,
@@ -71,7 +46,6 @@ export function AuthProvider({ configs, children }: AuthProviderProps) {
   };
 
   React.useEffect(() => {
-    // Recuperar o estado do usuário do sessionStorage quando o componente for montado
     const storedUser = sessionStorage.getItem("moneymate.erp.user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));

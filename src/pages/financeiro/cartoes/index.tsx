@@ -9,6 +9,7 @@ import CartaoEditModal from "@/components/financeiro-page/cartoes-page/cartoes-p
 import CartoesOptionsField from "@/components/financeiro-page/cartoes-page/cartoes-page-options-field";
 import NewCartaoModal from "@/components/financeiro-page/cartoes-page/cartoes-page-new-cartao-modal";
 import CartaoComprasTable from "@/components/financeiro-page/cartoes-page/cartoes-page-compras-table";
+import useExtratoController from "@/components/financeiro-page/extrato-page/hooks";
 
 export default function Cartoes() {
   const {
@@ -31,11 +32,14 @@ export default function Cartoes() {
     handlePostCartao,
     handlePutCartao,
     handleDeleteCartao,
+    handlePostDespesaCartao,
     handleEditCartaoModal,
     postCartaoAction,
-
     deleteCartaoAction,
+    postDespesaCartaoAction,
   } = useFinanceiroController();
+
+  const { transacoes } = useExtratoController();
 
   return (
     <>
@@ -64,7 +68,7 @@ export default function Cartoes() {
                 handleSetOnRef={handleSetOnRef}
                 selectedCard={selectedCard}
                 cartoes={cartoesList}
-                valorFatura={2}
+                valorFatura={500}
                 openAddNewDespesaModal={handleOpenModalNewDespesa}
                 handleRefOnClose={handleRefOnClose}
                 handleDeleteModal={handleDeleteCartaoModal}
@@ -77,10 +81,12 @@ export default function Cartoes() {
             formNewDespesaCartao={formCreateDespesaCartao}
             handleClose={handleOpenModalNewDespesa}
             configModal={modalStyle}
+            onSave={handlePostDespesaCartao}
+            postDespesaAction={postDespesaCartaoAction}
           />
         </Grid>
         <Grid item xs={8} md={4}>
-          <CartaoComprasTable compras={[]} />
+          <CartaoComprasTable cartoes={cartoesList} compras={transacoes} />
         </Grid>
         {deleteCartaoModalIsOpen && (
           <CartaoDeleteModal

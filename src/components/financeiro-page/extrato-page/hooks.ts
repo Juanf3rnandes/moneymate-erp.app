@@ -1,3 +1,4 @@
+import { useAuth } from "@/auth";
 import { useAct, useForm, useService } from "@/providers";
 import { TransacaoService } from "@/services/cadastro/transacao";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
@@ -5,6 +6,8 @@ import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import React from "react";
 
 export default function useExtratoController() {
+  const { user } = useAuth();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>(
     []
@@ -37,7 +40,7 @@ export default function useExtratoController() {
   const getTransacoesAction = useAct(
     () =>
       services.transacoes.getTransacao({
-        cod_pessoa: 44365,
+        cod_pessoa: user?.cod_pessoa as number,
       }),
 
     {

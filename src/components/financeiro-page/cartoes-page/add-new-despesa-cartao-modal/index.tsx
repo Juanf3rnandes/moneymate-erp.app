@@ -1,5 +1,7 @@
-import { Form } from "@/providers";
+import { Action, Form } from "@/providers";
+import { rotatingIcon, spinKeyframes } from "@/providers/animations";
 import { postTransacaoRequest } from "@/services/cadastro/transacao/types";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
@@ -12,6 +14,7 @@ import {
   Switch,
   FormControlLabel,
 } from "@mui/material";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 interface addNewDespesaCartaoModalProps {
   opened: boolean;
@@ -19,6 +22,7 @@ interface addNewDespesaCartaoModalProps {
   onSave?: () => void;
   configModal: object;
   formNewDespesaCartao: Form<postTransacaoRequest>;
+  postDespesaAction: Action;
 }
 
 export default function AddNewDespesaCartaoModal({
@@ -26,6 +30,7 @@ export default function AddNewDespesaCartaoModal({
   handleClose,
   onSave,
   formNewDespesaCartao,
+  postDespesaAction,
   configModal,
 }: addNewDespesaCartaoModalProps) {
   return (
@@ -77,8 +82,14 @@ export default function AddNewDespesaCartaoModal({
             </Stack>
           </Grid>
           <Grid>
-            <Button>Cancelar</Button>
-            <Button onClick={onSave}>Salvar</Button>
+            <Button onClick={handleClose}>Cancelar</Button>
+            {postDespesaAction.loading ? (
+              <LoadingButton sx={spinKeyframes}>
+                <AutorenewIcon sx={rotatingIcon} />
+              </LoadingButton>
+            ) : (
+              <Button onClick={onSave}>Cadastrar</Button>
+            )}
           </Grid>
         </Box>
       </Modal>

@@ -2,12 +2,16 @@ export interface getCartaoRequest {
   cod_pessoa: number;
 }
 
-export interface getCartaoResponse {
+export interface getCartoesResponse {
   id: number;
+  cod_pessoa: number;
+  numero: string;
   bandeira: string;
   tipo: string;
   limite: number;
   descricao: string;
+  dia_fechamento: number;
+  dia_vencimento: number;
 }
 
 export interface postCartaoRequest {

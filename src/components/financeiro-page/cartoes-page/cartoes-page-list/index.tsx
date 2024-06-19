@@ -32,6 +32,25 @@ interface CartoesListProps {
   selectedCard: null | number;
 }
 
+const LinearProgressWithLabel = (
+  props: LinearProgressProps & { value: number; maxValue: number }
+) => {
+  const progress = (props.value / props.maxValue) * 100;
+
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
+        <LinearProgress variant="determinate" value={progress} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">
+          {`${Math.round(progress)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
 export default function CartoesList({
   cartoes,
   valorFatura,
@@ -44,23 +63,6 @@ export default function CartoesList({
   handleEditModal,
 }: CartoesListProps) {
   const open = Boolean(anchorEl);
-
-  const LinearProgressWithLabel = (
-    props: LinearProgressProps & { value: number; comparisonValue: number }
-  ) => {
-    return (
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box sx={{ width: "100%", mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            (props.value / props.comparisonValue) * 100
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  };
 
   return (
     <Grid container spacing={2}>
@@ -104,7 +106,7 @@ export default function CartoesList({
               </Grid>
 
               <Stack m={2}>
-                {cartao.dia_fechamento > new Date().getDay() ? (
+                {cartao.dia_fechamento > new Date().getDate() ? (
                   <Typography variant="h6">Fatura aberta</Typography>
                 ) : (
                   <Typography variant="body2">Fatura fechada</Typography>
@@ -112,7 +114,7 @@ export default function CartoesList({
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2">Valor da fatura</Typography>
                   <Typography variant="body2">
-                    {valorFatura ? `R$: ${valorFatura}` : `R$:0,00`}
+                    {valorFatura ? `R$: ${valorFatura.toFixed(2)}` : `R$:0,00`}
                   </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
@@ -124,11 +126,11 @@ export default function CartoesList({
               </Stack>
               <Stack m={2}>
                 <Typography variant="body2">{`R$:${
-                  valorFatura ? valorFatura : `0,00`
+                  valorFatura ? valorFatura.toFixed(2) : `0,00`
                 } de R$:${cartao.limite.toFixed(2)}`}</Typography>
                 <LinearProgressWithLabel
                   value={valorFatura ? valorFatura : 0}
-                  comparisonValue={cartao.limite}
+                  maxValue={cartao.limite}
                 />
               </Stack>
               <Divider />

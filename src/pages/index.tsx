@@ -6,6 +6,7 @@ import HomeUltimasTransacoes from "@/components/home-page/home-ultimas-transacoe
 import HomeCartaoResumo from "@/components/home-page/home-cartao-resumo";
 import HomeVencimentoDespesaAlert from "@/components/home-page/home-vencimento-despesa-alert";
 import HomeContasPerformance from "@/components/home-page/home-contas-performance";
+import useFinanceiroController from "@/components/financeiro-page/cartoes-page/hooks";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inter = Inter({ subsets: ["latin"] });
@@ -18,6 +19,8 @@ export default function Home() {
     transacoes,
     despesaVencida,
   } = useHomePageController();
+
+  const { cartoesList } = useFinanceiroController();
 
   return (
     <>
@@ -32,7 +35,7 @@ export default function Home() {
           justifyContent="space-around"
           alignItems="center"
         >
-          <HomeCartaoResumo cartoes={[]} />
+          <HomeCartaoResumo cartoes={cartoesList} />
           <HomeContasPerformance />
         </Grid>
         <Grid container>
