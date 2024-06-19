@@ -15,7 +15,7 @@ interface ContasPageListProps {
 export default function ContasPageList({ contas }: ContasPageListProps) {
   return (
     <Grid container>
-      {contas.length < 1 ? (
+      {contas.length == 0 ? (
         <Typography variant="h6">Nenhuma conta cadastrada!</Typography>
       ) : (
         contas.map((conta) => (
@@ -37,11 +37,31 @@ export default function ContasPageList({ contas }: ContasPageListProps) {
                   ></IconButton>
                 </Grid>
               </Grid>
+              <Stack m={2}>
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography variant="body2">Saldo</Typography>
+                  <Typography variant="body2">{`R$: ${conta.saldo.toFixed(
+                    2
+                  )}`}</Typography>
+                </Stack>
+              </Stack>
 
               <Stack m={2}>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2">Instituição</Typography>
                   <Typography variant="body2">{conta.instituicao}</Typography>
+                </Stack>
+              </Stack>
+
+              <Stack m={2}>
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography variant="body2">Status</Typography>
+                  <Typography
+                    variant="body2"
+                    color={conta.saldo > 0 ? "green" : "red"}
+                  >
+                    {conta.saldo < 0 ? "Negativo" : "Positivo"}
+                  </Typography>
                 </Stack>
               </Stack>
 

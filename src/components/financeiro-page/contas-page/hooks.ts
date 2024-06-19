@@ -30,8 +30,13 @@ export default function useContasController() {
     (f) => !!f.cod_pessoa
   );
 
-  const getContasAction = useAct(() =>
-    services.conta.getContas({ cod_pessoa: 43658 })
+  const getContasAction = useAct(
+    () => services.conta.getContas({ cod_pessoa: 43658 }),
+    {
+      onSuccess(response) {
+        setContasList(response.results.data);
+      },
+    }
   );
 
   const postContaAction = useAct(

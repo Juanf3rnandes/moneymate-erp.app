@@ -17,7 +17,7 @@ export default function useHomePageController() {
   const [receitas, setReceitas] = React.useState<number>(100);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [despesas, setDespesas] = React.useState<number>(1100);
-  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(true);
+  const [despesaVencida, setDespesaVencida] = React.useState<boolean>(false);
 
   const [transacoes, setTransacoes] = React.useState<getTransacaoResponse[]>(
     []

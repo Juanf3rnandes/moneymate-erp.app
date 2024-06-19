@@ -45,17 +45,28 @@ export default function ContasPageNewContaModal({
                     variant="standard"
                     label="Saldo"
                     value={formCreateConta.value.saldo}
+                    onChange={(e) =>
+                      formCreateConta.set("saldo")(e.target.value)
+                    }
                   />
                   <TextField
                     placeholder="Descricao"
                     variant="standard"
                     label="descrição"
+                    value={formCreateConta.value.descricao}
+                    onChange={(e) =>
+                      formCreateConta.set("descricao")(e.target.value)
+                    }
                   />
                   <TextField
                     type="text"
                     placeholder="EX:Banco do Brasil"
                     variant="standard"
                     label="Instituição"
+                    value={formCreateConta.value.instituicao}
+                    onChange={(e) =>
+                      formCreateConta.set("instituicao")(e.target.value)
+                    }
                   />
                 </Stack>
               </FormControl>

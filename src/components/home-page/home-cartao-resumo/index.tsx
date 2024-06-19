@@ -2,6 +2,7 @@ import { getCartoesResponse } from "@/services/cadastro/types";
 import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import { LinearProgressWithLabel } from "@/components/financeiro-page/cartoes-page/cartoes-page-list";
 
 interface HomeCartaoResumoProps {
   cartoes: getCartoesResponse[];
@@ -66,11 +67,15 @@ export default function HomeCartaoResumo({ cartoes }: HomeCartaoResumoProps) {
                     )}
                     <Stack direction="row" justifyContent="space-between">
                       <Typography variant="body2">Valor da fatura</Typography>
-                      {/* <Typography variant="body2">
-                          {valorFatura
-                            ? `R$: ${valorFatura.toFixed(2)}`
-                            : `R$:0,00`}
-                        </Typography> */}
+                      <Typography variant="body2">
+                        {bestCartao.fatura
+                          ? `R$: ${bestCartao.fatura.toFixed(2)}`
+                          : `R$:0,00`}
+                        <LinearProgressWithLabel
+                          value={bestCartao.fatura ? bestCartao.fatura : 0}
+                          maxValue={bestCartao.limite}
+                        />
+                      </Typography>
                     </Stack>
                     <Stack direction="row" justifyContent="space-between">
                       <Typography variant="body2">Fecha em</Typography>

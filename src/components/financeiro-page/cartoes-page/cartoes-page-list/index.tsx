@@ -32,7 +32,7 @@ interface CartoesListProps {
   selectedCard: null | number;
 }
 
-const LinearProgressWithLabel = (
+export const LinearProgressWithLabel = (
   props: LinearProgressProps & { value: number; maxValue: number }
 ) => {
   const progress = (props.value / props.maxValue) * 100;

@@ -25,4 +25,5 @@ export interface getCartoesResponse {
   descricao: string;
   dia_fechamento: number;
   dia_vencimento: number;
+  fatura: number;
 }
