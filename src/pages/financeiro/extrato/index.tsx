@@ -32,7 +32,7 @@ export default function Extrato() {
             <Typography color="text.primary">Extrato</Typography>
           </Breadcrumbs>
         </Grid>
-        <ExtratoActionsButton />
+
         <Grid xs={8} md={4}>
           <Grid item gap={2}>
             <ExtratoTransacoesList

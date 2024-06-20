@@ -59,9 +59,6 @@ export default function Cartoes() {
 
           <Grid container justifyContent="center" alignItems="center">
             <Grid item gap={2}>
-              <CartoesOptionsField
-                openToCreateCartaoModal={handleOpenPostCartaoModal}
-              />
               <CartoesList
                 anchorEl={anchorEl}
                 handleSetOnRef={handleSetOnRef}
@@ -74,6 +71,9 @@ export default function Cartoes() {
                 handleEditModal={handleEditCartaoModal}
               />
             </Grid>
+            <CartoesOptionsField
+              openToCreateCartaoModal={handleOpenPostCartaoModal}
+            />
           </Grid>
           <AddNewDespesaCartaoModal
             opened={modalNewDespesaIsOpen}

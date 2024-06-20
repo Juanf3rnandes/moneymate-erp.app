@@ -15,12 +15,7 @@ export default function Home() {
   const {
     homeGreeting,
     getTransacoesAction,
-    handleHomeGreetings,
-    handleGetTransacoes,
     formattedDate,
-    balancoSaldo,
-    receitas,
-    despesas,
     transacoes,
     despesaVencida,
   } = useHomePageController();
