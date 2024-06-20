@@ -1,11 +1,12 @@
-import { postNewDespesaRequest } from "@/services/cadastro/despesas/types";
-import { postNewReceitaRequest } from "@/services/cadastro/receitas/types";
 import React from "react";
 import { useForm } from "@/providers/shared/form";
 import { useAct, useService } from "@/providers";
 import ReceitasService from "@/services/cadastro/receitas";
 import { postDespesaCartaoRequest } from "@/services/cadastro/cartao/types";
-import { postTransacaoRequest } from "@/services/cadastro/transacao/types";
+import {
+  TipoTransacao,
+  postTransacaoRequest,
+} from "@/services/cadastro/transacao/types";
 import { TransacaoService } from "@/services/cadastro/transacao";
 
 export default function useNewActionController() {
@@ -20,24 +21,38 @@ export default function useNewActionController() {
 
   const newActionService = useService((h) => ({
     receitas: new ReceitasService(h),
-    transacao: new TransacaoService()
-   
+    transacao: new TransacaoService(),
   }));
 
-  const addNewReceitaForm = useForm<postNewReceitaRequest>({
-    descricao: "",
-    valor: 0,
-    data: new Date().toLocaleString(),
-    recebida: false,
-  });
+  const addNewReceitaForm = useForm<postTransacaoRequest>(
+    {
+      valor: 0,
+      cod_cartao: null,
+      cod_pessoa: 0,
+      conta: "",
+      data: new Date(),
+      despesaFixa: false,
+      metodo_pagamento: null,
+      nomeTransacao: "",
+      tipo: TipoTransacao.none,
+    },
+    (f) => !!f.cod_pessoa
+  );
 
-  const addnewDespesaForm = useForm<postNewDespesaRequest>({
-    descricao: "",
-    valor: 0,
-    data: new Date().toLocaleString(),
-    categoria: "",
-    paga: false,
-  });
+  const addnewDespesaForm = useForm<postTransacaoRequest>(
+    {
+      valor: 0,
+      cod_cartao: null,
+      cod_pessoa: 0,
+      conta: "",
+      data: new Date(),
+      despesaFixa: false,
+      metodo_pagamento: null,
+      nomeTransacao: "",
+      tipo: TipoTransacao.none,
+    },
+    (f) => !!f.cod_pessoa
+  );
 
   const addDespesaCartaoForm = useForm<postDespesaCartaoRequest>({
     data: new Date(),
@@ -51,51 +66,88 @@ export default function useNewActionController() {
   const addTransacaoForm = useForm<postTransacaoRequest>({
     cod_pessoa: 0,
     conta: "",
-    nomeTransacao:"",
+    nomeTransacao: "",
     tipo: 1,
     valor: 0,
     data: new Date(),
-    cod_cartao:null,
-    despesaFixa:false
+    cod_cartao: null,
+    despesaFixa: false,
+    metodo_pagamento: null,
   });
 
-  const postNewReceita = useAct(() =>
-    newActionService.receitas.postReceita({
-      data: addNewReceitaForm.value.data,
-      descricao: addNewReceitaForm.value.descricao,
-      recebida: addNewReceitaForm.value.recebida,
-      valor: addNewReceitaForm.value.valor,
+  const postNewReceita = useAct(
+    () =>
+      newActionService.transacao.postTransacao({
+        cod_cartao: addNewReceitaForm.value.cod_cartao,
+        cod_pessoa: addNewReceitaForm.value.cod_pessoa,
+        conta: addNewReceitaForm.value.conta,
+        data: addNewReceitaForm.value.data,
+        despesaFixa: addNewReceitaForm.value.despesaFixa,
+        metodo_pagamento: addNewReceitaForm.value.metodo_pagamento,
+        nomeTransacao: addNewReceitaForm.value.nomeTransacao,
+        tipo: TipoTransacao.receita,
+        valor: addNewReceitaForm.value.valor,
+      }),
+    {
+      onSuccess() {
+        addNewReceitaForm.reset();
+        handleOpenModal();
+      },
+    }
+  );
 
+  const postNewDespesa = useAct(
+    () =>
+      newActionService.transacao.postTransacao({
+        cod_cartao: addnewDespesaForm.value.cod_cartao,
+        cod_pessoa: addnewDespesaForm.value.cod_pessoa,
+        conta: addnewDespesaForm.value.conta,
+        data: addnewDespesaForm.value.data,
+        despesaFixa: addnewDespesaForm.value.despesaFixa,
+        metodo_pagamento: addnewDespesaForm.value.metodo_pagamento,
+        nomeTransacao: addnewDespesaForm.value.nomeTransacao,
+        tipo: TipoTransacao.despesa,
+        valor: addnewDespesaForm.value.valor,
+      }),
+    {
+      onSuccess() {
+        addnewDespesaForm.reset();
+        handleDespesaModal();
+      },
+    }
+  );
+
+  const postTransacao = useAct(() =>
+    newActionService.transacao.postTransacao({
+      cod_pessoa: addTransacaoForm.value.cod_pessoa,
+      cod_cartao: addTransacaoForm.value.cod_cartao,
+      conta: addTransacaoForm.value.conta,
+      data: addTransacaoForm.value.data,
+      despesaFixa: addTransacaoForm.value.despesaFixa,
+      nomeTransacao: addTransacaoForm.value.nomeTransacao,
+      tipo: addTransacaoForm.value.tipo,
+      valor: addTransacaoForm.value.valor,
+      metodo_pagamento: addTransacaoForm.value.metodo_pagamento,
     })
   );
 
-  const postTransacao = useAct(() => 
-    newActionService.transacao.postTransacao( {
-      cod_pessoa:addTransacaoForm.value.cod_pessoa,
-      cod_cartao : addTransacaoForm.value.cod_cartao,
-      conta:addTransacaoForm.value.conta,
-      data:addTransacaoForm.value.data,
-      despesaFixa:addTransacaoForm.value.despesaFixa,
-      nomeTransacao:addTransacaoForm.value.nomeTransacao,
-      tipo:addTransacaoForm.value.tipo,
-      valor:addTransacaoForm.value.valor
-    })
-  )
-
   const handlePostNewReceita = () => {
-    console.log("teste");
     postNewReceita();
   };
 
+  const handlePostNewDespesa = () => {
+    postNewDespesa();
+  };
   const handlePostNewTransacao = () => {
     postTransacao();
-  }
+  };
 
   const handleOpenModal = () => {
     setModalOpened(!newReceitaModalmodalOpened);
   };
 
   const handleDespesaModal = () => {
+    addnewDespesaForm.reset();
     setDespesaModalOpened(!newDespesaModalmodalOpened);
   };
 
@@ -131,11 +183,13 @@ export default function useNewActionController() {
     newTransacaoOpened,
     handleOpenModal,
     handlePostNewReceita,
+    handlePostNewDespesa,
     handlePostNewTransacao,
     handleDespesaCartaoModal,
     handleDespesaModal,
     handleTransacaoModal,
     postNewReceita,
-    postTransacao
+    postNewDespesa,
+    postTransacao,
   };
 }

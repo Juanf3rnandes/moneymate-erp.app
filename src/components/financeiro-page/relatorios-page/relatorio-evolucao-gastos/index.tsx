@@ -32,10 +32,17 @@ export default function RelatorioEvolucaoGastos({
   };
 
   return (
-    <Card>
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item>
-        <Box width="100%" height="200px">
+    <Box sx={{ width: "auto", height: "auto" }}>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={{ width: "100%", height: "100%" }}
+      >
+        <Grid item xs={12} sx={{ width: "100%", height: "100%" }}>
+          <Box sx={{ width: "100%", height: "100%" }}>
             <ComboChart
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               data={data}
@@ -44,6 +51,6 @@ export default function RelatorioEvolucaoGastos({
           </Box>
         </Grid>
       </Grid>
-    </Card>
+    </Box>
   );
 }

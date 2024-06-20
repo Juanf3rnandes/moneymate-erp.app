@@ -131,8 +131,8 @@ export default function LoginTextField({
                     required
                     variant="standard"
                     placeholder="E-mail"
-                    value={formRegister.value.emaiL}
-                    onChange={(e) => formRegister.set("emaiL")(e.target.value)}
+                    value={formRegister.value.email}
+                    onChange={(e) => formRegister.set("email")(e.target.value)}
                   />
                   <TextField
                     required
@@ -142,12 +142,6 @@ export default function LoginTextField({
                     value={formRegister.value.senha}
                     onChange={(e) => formRegister.set("senha")(e.target.value)}
                   ></TextField>
-                  <TextField
-                    required
-                    variant="standard"
-                    placeholder="Confirmar senha"
-                    type="password"
-                  />
                 </Stack>
                 {actionRegister.loading ? (
                   <LoadingButton sx={spinKeyframes}>

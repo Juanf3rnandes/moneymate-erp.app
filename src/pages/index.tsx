@@ -1,26 +1,29 @@
 import { Inter } from "next/font/google";
 import HomeGreetings from "@/components/home-page/home-greetings";
-import useHomePageController from "@/components/home-page/hooks";
 import Grid from "@mui/material/Grid";
 import HomeUltimasTransacoes from "@/components/home-page/home-ultimas-transacoes";
 import HomeCartaoResumo from "@/components/home-page/home-cartao-resumo";
 import HomeVencimentoDespesaAlert from "@/components/home-page/home-vencimento-despesa-alert";
 import HomeContasPerformance from "@/components/home-page/home-contas-performance";
-import useFinanceiroController from "@/components/financeiro-page/cartoes-page/hooks";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inter = Inter({ subsets: ["latin"] });
+import { useAuth } from "@/auth";
+import useHomePageController from "@/components/home-page/hooks";
 
 export default function Home() {
+  const auth = useAuth();
+  const userName = auth?.user;
+
   const {
     homeGreeting,
     getTransacoesAction,
+    handleHomeGreetings,
+    handleGetTransacoes,
     formattedDate,
+    balancoSaldo,
+    receitas,
+    despesas,
     transacoes,
     despesaVencida,
   } = useHomePageController();
-
-  const { cartoesList } = useFinanceiroController();
 
   return (
     <>
@@ -35,7 +38,7 @@ export default function Home() {
           justifyContent="space-around"
           alignItems="center"
         >
-          <HomeCartaoResumo cartoes={cartoesList} />
+          <HomeCartaoResumo cartoes={[]} />
           <HomeContasPerformance />
         </Grid>
         <Grid container>

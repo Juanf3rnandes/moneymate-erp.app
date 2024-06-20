@@ -18,7 +18,7 @@ export default function Relatorios() {
     <>
       <title>Financeiro | Relatórios</title>
       <Box p={4}>
-        <Grid container spacing={3} direction="column">
+        <Grid container spacing={3}>
           <Grid item>
             <Breadcrumbs separator="-" aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">

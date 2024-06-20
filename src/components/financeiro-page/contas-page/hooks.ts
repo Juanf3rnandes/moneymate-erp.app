@@ -42,7 +42,7 @@ export default function useContasController() {
   const postContaAction = useAct(
     () =>
       services.conta.postConta({
-        cod_pessoa: user?.cod_pessoa as number,
+        cod_pessoa: 43658,
         cod_tipo: formNewConta.value.cod_tipo,
         descricao: formNewConta.value.descricao,
         instituicao: formNewConta.value.instituicao,

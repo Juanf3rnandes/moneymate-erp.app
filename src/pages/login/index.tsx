@@ -20,7 +20,7 @@ export default function LoginPage() {
       <Grid container justifyContent="center" alignItems="center">
         <Box p={4} width="auto" height="auto">
           <Grid>
-            <Card variant="outlined" sx={{ borderRadius: "2%" }}>
+            <Card variant="outlined">
               <CardContent>
                 <Box p={2}>
                   <Grid

@@ -58,11 +58,10 @@ export default function Cartoes() {
           </Breadcrumbs>
 
           <Grid container justifyContent="center" alignItems="center">
-            <CartoesOptionsField
-              openToCreateCartaoModal={handleOpenPostCartaoModal}
-            />
-
-            <Grid item>
+            <Grid item gap={2}>
+              <CartoesOptionsField
+                openToCreateCartaoModal={handleOpenPostCartaoModal}
+              />
               <CartoesList
                 anchorEl={anchorEl}
                 handleSetOnRef={handleSetOnRef}

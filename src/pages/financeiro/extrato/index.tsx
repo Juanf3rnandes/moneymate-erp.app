@@ -2,7 +2,7 @@ import ExtratoActionsButton from "@/components/financeiro-page/extrato-page/extr
 import ExtratoDeleteTransacaoModal from "@/components/financeiro-page/extrato-page/extrato-delete-transacao-modal";
 import ExtratoTransacoesList from "@/components/financeiro-page/extrato-page/extrato-transacoes-list";
 import useExtratoController from "@/components/financeiro-page/extrato-page/hooks";
-import { Breadcrumbs, Grid, Link, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Grid, Link, Typography } from "@mui/material";
 
 export default function Extrato() {
   const {
@@ -20,8 +20,8 @@ export default function Extrato() {
   return (
     <>
       <title>Financeiro - Extrato </title>
-      <Grid>
-        <Grid container display="flex" justifyContent="space-between">
+      <Box p={4}>
+        <Grid container m={2}>
           <Breadcrumbs separator="-" aria-label="breadcrumb">
             <Link underline="hover" color="inherit" href="/">
               Home
@@ -34,7 +34,7 @@ export default function Extrato() {
         </Grid>
         <ExtratoActionsButton />
         <Grid xs={8} md={4}>
-          <Grid item>
+          <Grid item gap={2}>
             <ExtratoTransacoesList
               transacoes={transacoes}
               selectedTransacao={selectedTransacao}
@@ -45,7 +45,7 @@ export default function Extrato() {
             />
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
       {deleteTransacaoModalIsOpen && (
         <ExtratoDeleteTransacaoModal
           deleteTransacaoAction={deleteTransacaoAction}

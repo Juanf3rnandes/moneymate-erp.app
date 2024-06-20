@@ -1,41 +1,73 @@
-import React, { ReactNode, useState, createContext, useContext } from "react";
-import { AuthConfig, IAuthContext, User } from "./types";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
-export type { AuthConfig, User };
-
-const AuthContext = createContext<IAuthContext>(null as never);
-export const useAuth = () => useContext(AuthContext);
-
-interface AuthProviderProps {
-  configs: AuthConfig;
-  children?: ReactNode;
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  bearerToken: string;
+  cod_pessoa: number;
 }
 
-export const authConfig: AuthConfig = {
-  accessTokenKey: "",
-  erpTokenKey: "",
-  redirectToKey: "redirectKey",
-  afterLoginPath: "/",
-};
+export interface IAuthContext {
+  user?: User;
+  cod_pessoa?: number;
+  authenticated: boolean;
+  authOn: (user: User) => void;
+  authOff: () => void;
+  logout: () => void;
+}
 
-export function AuthProvider({ configs, children }: AuthProviderProps) {
+export const AuthContext = createContext<IAuthContext>({
+  authenticated: false,
+  authOn: () => {},
+  authOff: () => {},
+  logout: () => {},
+});
+
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const router = useRouter();
 
-  const authOn = (userInfos: User) => {
-    const userData: User = {
-      ...userInfos,
-      cod_pessoa: userInfos.cod_pessoa, // Certifique-se de manter o cod_pessoa
-    };
-
+  const authOn = (userData: User) => {
     setAuthenticated(true);
-    sessionStorage.setItem("moneymate.erp.user", JSON.stringify(userData));
     setUser(userData);
+    Cookies.set("moneymate.erp.user", JSON.stringify(userData), { expires: 7 });
   };
 
-  const authOff = () => {};
+  const authOff = () => {
+    setAuthenticated(false);
+    setUser(undefined);
+    Cookies.remove("moneymate.erp.user");
+  };
 
-  const logout = () => {};
+  const logout = () => {
+    authOff();
+    router.push("/login");
+  };
+
+  useEffect(() => {
+    const storedUser = Cookies.get("moneymate.erp.user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setAuthenticated(true);
+    } else {
+      // Não há usuário logado, redirecionar para a página de login
+      router.push("/login");
+    }
+  }, [router.pathname]); // Verificar o estado de autenticação sempre que a rota for alterada
 
   const value: IAuthContext = {
     user,
@@ -45,13 +77,5 @@ export function AuthProvider({ configs, children }: AuthProviderProps) {
     logout,
   };
 
-  React.useEffect(() => {
-    const storedUser = sessionStorage.getItem("moneymate.erp.user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setAuthenticated(true);
-    }
-  }, []);
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+};

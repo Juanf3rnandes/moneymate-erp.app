@@ -161,7 +161,10 @@ export default function useFinanceiroController() {
   );
 
   const getTransacaoAction = useAct(
-    () => services.transacao.getTransacao({ cod_pessoa: 44365 }),
+    () =>
+      services.transacao.getTransacao({
+        cod_pessoa: user?.cod_pessoa as number,
+      }),
     {
       onSuccess(response) {
         setTransacoes(response.results.data);

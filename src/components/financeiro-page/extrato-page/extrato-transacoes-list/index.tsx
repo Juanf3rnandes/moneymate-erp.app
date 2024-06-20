@@ -2,8 +2,6 @@ import React, { useState, MouseEvent, ChangeEvent } from "react";
 import {
   Card,
   Grid,
-  Stack,
-  Typography,
   Menu,
   MenuItem,
   IconButton,
@@ -16,8 +14,6 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Image from "next/image";
-import emptyImage from "../../../../../public/assets/imgs/transacoes-empty.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import { parseISO } from "date-fns";
@@ -137,21 +133,7 @@ export default function ExtratoTransacoesList({
                     </TableRow>
                   ))
               ) : (
-                <TableRow>
-                  <TableCell colSpan={5}>
-                    <Grid container justifyContent="center">
-                      <Stack justifyContent="center" alignItems="center">
-                        <Image
-                          src={emptyImage}
-                          alt=""
-                          width={200}
-                          height={200}
-                        />
-                        <Typography>Nenhum resultado</Typography>
-                      </Stack>
-                    </Grid>
-                  </TableCell>
-                </TableRow>
+                <Grid container justifyContent="center"></Grid>
               )}
             </TableBody>
           </Table>

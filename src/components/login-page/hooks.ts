@@ -30,12 +30,13 @@ export default function useLoginController() {
 
   const formRegister = useForm<postRegisterRequest>(
     {
-      emaiL: "",
+      email: "",
       nome: "",
       senha: "",
       cpf_cnpj: "",
+      ativado: false,
     },
-    (f) => !!f.emaiL && !!f.nome && !!f.senha
+    (f) => !!f.email && !!f.nome && !!f.senha
   );
 
   const loginAction = useAct(
@@ -59,10 +60,11 @@ export default function useLoginController() {
   const registerAction = useAct(
     () =>
       services.login.postRegister({
-        emaiL: formRegister.value.emaiL,
+        email: formRegister.value.email,
         nome: formRegister.value.nome,
         senha: formRegister.value.senha,
         cpf_cnpj: formRegister.value.cpf_cnpj,
+        ativado: true,
       }),
     {
       onSuccess: () => {

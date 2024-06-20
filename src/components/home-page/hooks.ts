@@ -3,8 +3,11 @@ import { format } from "date-fns";
 import { getTransacaoResponse } from "@/services/cadastro/transacao/types";
 import { useAct, useService } from "@/providers";
 import { TransacaoService } from "@/services/cadastro/transacao";
+import { useAuth } from "@/auth";
 
 export default function useHomePageController() {
+  const { user } = useAuth();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, setUserName] = React.useState<string>("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,7 +32,8 @@ export default function useHomePageController() {
   }));
 
   const getTransacoesAction = useAct(
-    () => services.login.getTransacao({ cod_pessoa: 44365 }),
+    () =>
+      services.login.getTransacao({ cod_pessoa: user?.cod_pessoa as number }),
     {
       onSuccess(response) {
         setTransacoes(response.results.data);
@@ -66,7 +70,7 @@ export default function useHomePageController() {
   //?? ao iniciar
   React.useEffect(() => {
     handleHomeGreetings();
-    handleGetTransacoes();
+    getTransacoesAction();
   }, []);
 
   return {

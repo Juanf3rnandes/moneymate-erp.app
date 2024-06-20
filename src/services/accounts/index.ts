@@ -1,6 +1,5 @@
 import {
   postLoginRequest,
-  loginResponse,
   postRegisterRequest,
   postRegisterResponse,
 } from "./types";

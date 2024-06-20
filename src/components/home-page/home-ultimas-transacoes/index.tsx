@@ -30,20 +30,30 @@ export default function HomeUltimasTransacoes({
       </Stack>
       <CardContent>
         {actionTransacoes.loading ? (
-          <Grid spacing={2}>
+          <Grid
+            item
+            xs={12}
+            spacing={2}
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Skeleton variant="rectangular" animation="wave" />
           </Grid>
         ) : transacoes.length > 0 ? (
-          <Stack direction="column" justifyContent="space-between" spacing={2}>
+          <Grid
+            justifyContent="space-between"
+            spacing={2}
+            justifyItems="center"
+          >
             {transacoes.map((transacao, index) => (
               <Box
                 key={index}
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "space-around ",
                   alignItems: "center",
-                  maxWidth: "800px",
+                  maxWidth: "100%",
                 }}
               >
                 <Typography variant="body1" sx={{ flex: 1 }}>
@@ -62,7 +72,7 @@ export default function HomeUltimasTransacoes({
                 </Typography>
               </Box>
             ))}
-          </Stack>
+          </Grid>
         ) : (
           <p>Nenhuma transação disponível</p>
         )}

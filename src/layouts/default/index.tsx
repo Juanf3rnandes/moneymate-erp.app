@@ -1,42 +1,45 @@
 import styles from "../styles/layoutDefault.module.scss";
 import { FaRegBell } from "react-icons/fa";
 import Avatar from "@mui/material/Avatar";
-import { Stack, Typography, Badge } from "@mui/material";
+import { Stack, Typography, Badge, Menu, MenuItem } from "@mui/material";
 import logoImage from "../../../public/assets/imgs/Logo_do_MoneyMate.png";
 import Image from "next/image";
 import Link from "next/link";
-import { User } from "@/auth";
+import { useState } from "react";
+
 interface DefaultLayoutProps {
   userName: string;
   left?: React.ReactNode;
 }
 
 export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
-  function stringToColor(string: string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = "#";
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
-
   function stringAvatar(name: string) {
+    if (!name) {
+      return {
+        children: "",
+      };
+    }
+
+    const nameParts = name.split(" ");
+    const initials =
+      nameParts.length >= 2
+        ? `${nameParts[0][0]}${nameParts[1][0]}`
+        : nameParts[0][0];
+
     return {
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+      children: initials,
     };
   }
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -76,8 +79,16 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
                     height: 30,
                     width: 30,
                   }}
+                  onClick={handleClick}
                 />
                 <Typography variant="body1">{userName}</Typography>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </Menu>
               </Stack>
             </Stack>
           </nav>

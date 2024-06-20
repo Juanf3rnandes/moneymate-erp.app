@@ -12,9 +12,10 @@ export interface loginResponse {
 
 export interface postRegisterRequest {
   nome: string;
-  emaiL: string;
+  email: string;
   senha: string;
   cpf_cnpj?: string | null;
+  ativado: boolean;
 }
 
 export interface postRegisterResponse {

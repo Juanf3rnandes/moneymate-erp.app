@@ -10,8 +10,10 @@ import NewTransacaoModal from "@/components/new-action/new-action-modal/new-tran
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import PublicLayout from "@/layouts/public";
-import { AuthProvider } from "@/auth";
+import { AuthProvider, useAuth } from "@/auth";
 import { authConfig } from "@/auth";
+import useContasController from "@/components/financeiro-page/contas-page/hooks";
+import useFinanceiroController from "@/components/financeiro-page/cartoes-page/hooks";
 
 dotenv.config();
 
@@ -33,29 +35,35 @@ export default function App({ Component, pageProps }: AppProps) {
     postTransacao,
     addTransacaoForm,
     postNewReceita,
-    handlePostNewTransacao
+    handlePostNewDespesa,
+    handlePostNewTransacao,
   } = useNewActionController();
 
+  const { contasList } = useContasController();
+
+  const { cartoesList } = useFinanceiroController();
+
   const router = useRouter();
-  //teste
+
+  const { user } = useAuth();
 
   return (
     <>
       <AuthProvider configs={authConfig}>
         {router.pathname !== "/login" ? (
-          
-       <>
-          <DefaultLayout userName="teste juan" />
-          <NewActionFloatButton
-          handleOpenNewReceita={handleOpenModal}
-          handleOpenNewDespesa={handleDespesaModal}
-          handleOpenNewDespesaCartao={handleDespesaCartaoModal}
-          handleOpenNewTransacao={handleTransacaoModal}
-        /></>
+          <>
+            <DefaultLayout userName={user?.name} />
+            <NewActionFloatButton
+              handleOpenNewReceita={handleOpenModal}
+              handleOpenNewDespesa={handleDespesaModal}
+              handleOpenNewDespesaCartao={handleDespesaCartaoModal}
+              handleOpenNewTransacao={handleTransacaoModal}
+            />
+          </>
         ) : (
           <PublicLayout />
         )}
-        <Component {...pageProps} />    
+        <Component {...pageProps} />
         {newReceitaModalmodalOpened && (
           <NewReceitaModal
             postNewReceita={postNewReceita}
@@ -71,7 +79,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <NewDespesaModal
             opened={newDespesaModalmodalOpened}
             addNewDespesaForm={addnewDespesaForm}
+            cartoes={cartoesList}
+            contas={contasList}
             handleModal={handleDespesaModal}
+            onSave={handlePostNewDespesa}
             style={modalStyle}
           />
         )}
@@ -84,7 +95,7 @@ export default function App({ Component, pageProps }: AppProps) {
             style={modalStyle}
           />
         )}
-        {NewTransacaoModal && (
+        {newTransacaoOpened && (
           <NewTransacaoModal
             onSave={handlePostNewTransacao}
             opened={newTransacaoOpened}
