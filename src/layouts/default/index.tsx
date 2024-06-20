@@ -6,6 +6,7 @@ import logoImage from "../../../public/assets/imgs/Logo_do_MoneyMate.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "@/auth";
 
 interface DefaultLayoutProps {
   userName: string;
@@ -13,6 +14,8 @@ interface DefaultLayoutProps {
 }
 
 export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
+  const { authOff } = useAuth();
+
   function stringAvatar(name: string) {
     if (!name) {
       return {
@@ -87,7 +90,7 @@ export default function DefaultLayout({ userName, left }: DefaultLayoutProps) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={authOff}>Logout</MenuItem>
                 </Menu>
               </Stack>
             </Stack>
